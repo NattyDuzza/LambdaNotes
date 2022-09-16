@@ -1,0 +1,40 @@
+author: Nathan Durrant
+title: LambdaNotes
+subtitle: A Mind Map Based Note-taking Applicaton
+lang: en
+license: >-
+  All commentry and related diagrams are published under the Creative Commons Attribution-ShareAlike 4.0-International license.
+  All code excerpts are published GNU Affero General Public License v3 unless otherwise stated.
+date: "2023"
+
+## Output formats
+
+# Uncomment and fill to generate files
+# output.html: some_file.html
+# output.epub: some_file.epub
+output.pdf: /tmp/project.pdf
+
+# Or uncomment the following to generate PDF, HTML and EPUB files based on this file's name
+# output: [pdf, epub, html]
+
+# Uncomment and fill to set cover image (for EPUB)
+# cover: some_cover.png
+
+# Rendering options
+rendering.num_depth: 4
+rendering.initials: false
+rendering.inline_toc: true
+rendering.chapter.template: "{{{number}}}. {{{chapter_title}}}"
+rendering.chapter.roman_numerals: false
+rendering.highlight: syntect
+
+# Latex options
+tex.class: book
+tex.class: report
+tex.links_as_footnotes: true
+tex.paper.size: a4paper
+
+## List of chapters
++ 01_analysis.md
++ 02_test.md
+
