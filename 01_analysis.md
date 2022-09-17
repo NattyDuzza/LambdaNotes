@@ -33,8 +33,7 @@ Hence one can observe that the program will have applications in this sector as 
 
 Rupert is attends a non-selective state school. 
 
-##### Interview
-
+##### Interview - Standard Questions
 
 
 - Q: Would you class yourself as a enthusiastic student?
@@ -42,7 +41,47 @@ Rupert is attends a non-selective state school.
   A: No, I find myself not enjoying school most of the time. I always look forward to the weekend. 
 
 - Q: How much time would you say you study for a week outside of school (not including homework)?
+
   A: Probably less than an hour. 
+
+- Q: When you do partake in revision, what techniques do you use currently?
+
+  A: I usually just read my textbooks. It takes the least effort!
+
+- Q: What experience do you have using mindmaps? Do you like them?
+
+  A: Not a lot, I've done them in class before when the teacher has set it as a task. I think they are better than normal notes. 
+
+- Q: Would you be more likely to make notes on paper or digitally?
+ 
+  A: Digitally, I think. Keeping loads of paper about is annoying. I also prefer typing than writing with a pen et cetera. 
+
+- Q: What experience do you have with digital notetaking apps?
+
+  A: None. I've made notes on Word once before for homework, but I haven't used any apps specifically made for the purpose.
+
+- Q: What would you look for in a digital notetaking application?
+
+  A: Something quick. I want to able to get a lot of revision done in a short time so I can get on with other things.
+
+
+##### Interview - Personalised Questions
+
+
+- Q: You said you think mind maps are better than normal notes. Why is that? 
+
+  A: I like how they can develop quickly, and you don't have to copy out loads of information to make them useful. 
+
+- Q: Do you think if you found a 'low-effort' way of revising, you would try to use it consistently?
+
+  A: Yes. It would be good because I can say I've done revision without spending hours copying out a textbook.
+
+- Q: Finally, you said you had used Word for notetaking, how was that experience?
+
+  A: Very boring. It's no different to just copying notes down on paper really.
+
+
+
 
 
 
