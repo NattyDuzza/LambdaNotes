@@ -14,19 +14,20 @@ k = 0
 
 while k < 11 or len(adj) == 0:
     name = input("Enter: ")
+
+    if name == "exit":
+        break
+    
+
     previousNode = k - 1
 
     done = False
-
+    
     for i in range(0, len(adj)):
-
         if name in adj[i]:
             print('double')
             adj[i].append(previousNode)
             k = i
-
-        
-
             done = True
             
     if done != True:        
