@@ -38,17 +38,26 @@ firstNode = True
 
 while count < 15:
     
+    if lastNode != 0:
+        currentIndex = names.index(lastNode)
+    
     nextInput = input("Enter: ")
-    if nextInput not in nodes:
-        nodes[nextInput] = Node(nextInput)
-        names.append(nextInput)
-
-    if firstNode != True:
-        nodes[nextInput].connector(lastNode)
-        lastNode = nodes[nextInput].name()
+    
+    if nextInput == "<":
+        lastNode = names[currentIndex - 1]
+    
     else:
-        firstNode = False
-        lastNode = nextInput
+
+        if nextInput not in nodes:
+            nodes[nextInput] = Node(nextInput)
+            names.append(nextInput)
+
+        if firstNode != True:
+            nodes[nextInput].connector(lastNode)
+            lastNode = nodes[nextInput].name()
+        else:
+            firstNode = False
+            lastNode = nextInput
 
     count += 1
 
