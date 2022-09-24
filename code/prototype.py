@@ -12,14 +12,14 @@ done = False
 
 k = 0
 
-while k < 11 or len(adj) == 0:
+while k < 100 or len(adj) == 0:
     name = input("Enter: ")
 
     if name == "exit":
         break
     
 
-    previousNode = k - 1
+    previousNode = k
 
     done = False
     
