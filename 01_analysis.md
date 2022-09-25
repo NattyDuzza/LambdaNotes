@@ -190,7 +190,7 @@ software. She is eager to test out new methods, and so hopefully will test Lambd
   * Suitable for a professional enviroment.
   * Be able to be used in conjunction with pre-existing solutions.
 
-### Comparable Solutions
+## Comparable Solutions
 
 In this section, we will look at pre-existing software. This will help to decide which features to borrow, and which to actively not 
 include so as to make LambdaNotes something fresh on the market.
@@ -204,8 +204,8 @@ The analyses of these will be formatted as following:
 - What can be taken as inspiration from this software
 - Conclusion
 
-#### Notion
+### Notion
 
-#### Obsidian
+### Obsidian
 
-#### XMind
+### XMind
