@@ -29,16 +29,24 @@ Hence one can observe that the program will have applications in this sector as 
 
 ### Introduction to the Stakeholders
 
+Stakeholders will be presented as following:
+- A short biography of the person.
+- Their answers to a collection of set questions depending on which stakeholder group they fall into (student or other).
+- Their answers to questions specifically designed to build on their answers from previous questions.
+- An analysis of all the answers.
+
+All stakeholders have been briefed on what LambdaNotes aims to achieve.
+
 #### Rupert (Full-time Student)
 
 Rupert is attends a non-selective state school. 
 
-##### Interview - Standard Questions
+##### Interview - Predefined Questions
 
 
 - Q: Would you class yourself as a enthusiastic student?
 
-  A: No, I find myself not enjoying school most of the time. I always look forward to the weekend. 
+  A: No, I find myself not enjoying school most of the time. I always look forward to the weeExemplar Candidate Work6A Level Computer Sciencekend. 
 
 - Q: How much time would you say you study for a week outside of school (not including homework)?
 
@@ -81,8 +89,123 @@ Rupert is attends a non-selective state school.
   A: Very boring. It's no different to just copying notes down on paper really.
 
 
+##### Interview Analysis
 
 
+- Personality: Rupert does not have much motivation when it comes to revising, often choosing to not spend effort on it. Hence, his 
+  academic results are not at their full potential. This means one can test the effectivness of LambdaNotes by seeing how it can 
+  improve his time spent revising and hence his school results.
+
+- Experience: This stakeholder does not have much experience in the area LambdaNotes fits into. This will allow for user feedback from
+  a perspective that is not solely comparing the software to other alternatives. 
+
+- Desired Features:
+  * Easy to revise a lot in a short period.
+  * Adds to your motivation.
 
 
+#### Alex (Full-time Student)
 
+Alex is known to be a hard working student who strives for the top grades. He has aspirations to be a Doctor of Medicine and to study for this at Oxford University.
+
+##### Interview - Predefined Questions
+
+- Q: Would you class yourself as a enthusiastic student?
+
+  A: I enjoy school a lot and my friends make the experience much better. Sometimes the weekends are quite boring. 
+
+- Q: How much time would you say you study for a week outside of school (not including homework)?
+
+  A: About 14 hours. 
+
+- Q: When you do partake in revision, what techniques do you use currently?
+
+  A: I like to read and transcribe notes onto a document and then complete past questions. 
+
+- Q: What experience do you have using mindmaps? Do you like them?
+
+  A: I don't usually use mind maps, but I do think they are effective in connecting relevant information.
+
+- Q: Would you be more likely to make notes on paper or digitally?
+ 
+  A: Probably on paper first, then copy them digitally as a reinforcement technique.
+
+- Q: What experience do you have with digital notetaking apps?
+
+  A: I am quite familiar, since I like to digitalise my notes.
+
+- Q: What would you look for in a digital notetaking application?
+
+  A: I would like to see a feature that has a 'recommended' section that suggests pages that haven't been visited in a while.
+
+
+##### Interview - Personalised Questions
+
+
+##### Interview Analysis
+
+
+#### Gretchen (Wedding Planner)
+
+Gretchen is a self-employed wedding planner, having been in the buisness for 22 years. She, at anyone time, can be planning up to 20 ceremonies. 
+
+##### Interview - Predefined Questions
+
+
+- Q: How do you go about planning a wedding?
+ 
+  A: Firstly, we need to find what each party wants. Sometimes, they don't have the same ideas and don't know how to get a good middle ground. Once that is done, we build upon the basis that has been settled on and branch out from there; venue, food, entertainment et cetera. 
+
+- Q: What tools do you use? 
+
+  A: The majority of the time I use a folder for each client. This makes it easier to move between projects without getting confused. 
+
+- Q: Would you consider using a digital notetaking solution?
+
+  A: Although I am happy with the system I have developed over the last 20 years, I would consider using a novel piece of software to work in conjunction with what I already do. There's definitely space for an extra supplementary tool. 
+
+##### Interview - Personalised Questions
+
+
+- Q: You said that sometimes there are discrepanicies between what the partners want. How could a system based on links between items be of use to you in this context?
+
+  A: I think that it would be useful for finding a middle ground quicker. For example, if we kept building links between ideas then it would be possible to pick any two thought and find the easiest way they link together. From your description of what your program will do, if we could find multiple methods to link ideas I think it will be better for the wedding since it will be more evenly split based on the wants of each partner.
+
+- Q: If you do find yourself finding LambdaNotes as a useful tool, will you keep it to yourself or recommend it to customers for personal use. 
+
+  A: Well you have said it will be free, I think I would recommend it to my clients. What have they got to lose? If the outcomes can be viewed on both of our systems it will streamline the process significantly. 
+
+
+##### Interview Analysis
+
+
+- Personality: Gretchen shows a professional outlook which will be incredibly useful when it comes to user feeback as we develop the 
+software. She is eager to test out new methods, and so hopefully will test LambdaNotes throughly and with genuine interest.
+
+- Experience: She has a lot of experience using notetaking for her buisness; this will help gain feeback from someone who can compare it to other notetaking tools. Her years of experience in her industry will also help to see how LambdaNotes can fit into existing workflows and how it could revolutionise peoples way of working.
+
+- Desired Features: 
+  
+  * Find routes between two nodes. 
+  * Suitable for a professional enviroment.
+  * Be able to be used in conjunction with pre-existing solutions.
+
+### Comparable Solutions
+
+In this section, we will look at pre-existing software. This will help to decide which features to borrow, and which to actively not 
+include so as to make LambdaNotes something fresh on the market.
+
+
+The analyses of these will be formatted as following:
+- An introduction to the program
+- Stakeholders current opinion on the software (if applicable)
+- List of features
+- Further analysis of selected features
+- What can be taken as inspiration from this software
+- Conclusion
+
+#### Notion
+
+#### Obsidian
+
+#### XMind
