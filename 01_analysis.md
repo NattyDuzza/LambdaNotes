@@ -209,3 +209,157 @@ The analyses of these will be formatted as following:
 ### Obsidian
 
 ### XMind
+
+
+## Planned Solution
+
+### Visual 
+##### UI:
+
+
+The program will boot into a window featuring a simple to understand UI. This menu will have options to open a current mind map,
+make a new one or see a manual for the program.
+
+
+##### Mind Map:
+
+
+Upon a point of the user's choice, an output will be available to see the representation of how the data is being stored. This will be either a JPEG, PNG, PDF or SVG based on the users choice of configuration. 
+
+
+##### Added Information:  
+
+
+The user will be able to choose a node and put additional information 'underneath' it. This can then be retrieved when needed.
+
+
+##### Revision Suggestions:
+
+
+The program will be able to suggest nodes to the user that they may have not visited/inspected recently.
+
+
+### Computational
+
+
+##### Pathfinding:
+
+
+The user will have the option to find links between two nodes anywhere on the mind map. If chosen, multiple pathways will be outputted.
+This is so that the idea of how information is linked (which has been seen to be advantegeous for my stakeholders) in multiple ways. 
+In a context of studying, this will help build links between knowledge and hence help retainment.
+
+
+##### Date Storage / Databases:
+
+
+The data created by a creation of a Mind Map will be stored in some way for later retrieval. Furthermore, (although not a success 
+criteria of the project) it would be optimal to have a website where users can upload their Mind Maps for other's use. Said website
+could also be used as the landing page to download the software.
+
+
+##### Installer:
+
+
+The program will be downloaded through an installer that will render the program as an executable, and make sure the required packages are also installed to the end users machine.
+
+
+### Limitations
+
+One limitation of my solution is that the mind map output (at least in its first iterations) will not be that customisable 
+or interactive. It will just be an output to see visually. Another limitation is that there won't be an option for added 
+information that can be stored to be represented on the mindmap; although it is an advantage that the Mind Map will be easy to read,
+it is probable that in some people's perspective this will be a lacking feature.
+
+## Success Criteria
+
+The following table contains the success criteria for the project. It uses a numbering system in the form (section number, requirement number). e.g. (1.1 refers to Requirement 1 from Section 1). Any requirements listed in parentheses, (), are possible requirements that may be implemented at a post initial-development stage.
+
+- **Section 1** - Application Access and User Interface
+- **Section 2** - Mind Map Functions and Algorithms 
+- **Section 3** - Flashcard Functions and Algorithms
+- **Section 4** - Data Collection and Storage
+- **Section 5** - Usability and System Requirements
+
+| **Numerical Identifier** | **Description** | 
+| :---: | ------------------ |
+| 1.1 | Installer for software  |
+| | |
+| 1.2 | Desktop widget/access for program opening |
+| | |
+| 1.3 | User can choose whether they want to enter mind map, flashcard, data access or configuration mode |
+| | |
+| 1.4 | Incorporates colour and some above-minmal design |
+| | |
+| 1.5 | Fast changes between pages of the software/UI |
+| | |
+| 1.6 | Data safe exit of application (e.g. Notifying user they have unsaved chages). **Note**: Depending on the implementation of how data is stored, an active check may not be necessary |
+| | |
+| 1.7 | Configuration of program should allow user to specify which modules they want active/accessible (mind maps, flashcards or both)
+| | |
+| 2.1 | Able to export visual representation of mind map into a visual picture format |
+| | |
+| 2.2 | Able to view mind map in application |
+| | |
+| 2.3 | Able to view mind map outside of application through native file system |
+| | |
+| 2.4 | Able to show fastest link between two given nodes |
+| | |
+| 2.5 | Able to show multiple pathways between two given nodes |
+| | |
+| 2.6 | Can list all nodes in a given mindmap |
+| | |
+| (2.7) | Can show possible links between two given mind maps |
+| | |
+| (2.8) | Can merge two mind maps and store this data structure |
+| | |
+| 3.1 | Able to create a deck - aka a place in storage where flashcards will be stored |
+| | |
+| 3.2 | Able to add as many flashcards as needed into a deck |
+| | |
+| 3.3 | Able to store the following information about each card: Front (e.g. prompt/question), Back (e.g. answer), Confidence (Very Good, Good, Okay, Bad, Very Bad), TimesVisited |
+| | |
+| 3.4 | Able to quiz the user on the decks they have made |
+| | | 
+| 3.5 | User can change confidence level of the card they have just been quized on according to there confidence on that attempt |
+| | |
+| 3.6 | Have a suitable algorithm that inspects the cards rated at each confidence level and presents the user the cards in a manner which cards with lower confidence are seen more than ones with high confidence |
+
+
+| **Numerical Identifier** | **Description** |
+| :---: | ------------------ |                
+| 4.1 | Reliable way of storing data long term |
+| | |
+| 4.2 | The format in which data is saved should be such that it can be transferred to another system and interpreted by another instance of the software |
+| | |
+| 4.3 | Updates to the software should be independent of the data collection and storage system so as to ensure updates do not invalidate previously created and stored data. Hence, the data collection and storage program should be designed and implemented in a way in which it will not need to be updated after initial development |
+| | | 
+| (4.4) | Online database of data that can be uploaded by users for other users |
+| | |
+| 5.1 | Easy to use software: simple UI and intuitive controls |
+| | |
+| 5.2 | Easy to run on any computer system, so long as its native software can support the needed dependencies for the program | 
+
+
+
+## Stakeholder Feeback
+
+We asked all the stakeholders their thoughts about the proposed features of the software:
+
+### Rupert
+
+Rupert reported he was happy, so far as he could see, with the planned software. It must be noted, however, that his lack of 
+previous experience with such programs does not put him in the best position to comment. 
+
+He did suggest we make the requirement that the UI incorporated colour, and hence more interesting to look at and catch the users 
+attention. This can now be seen under criterion 1.4 .  
+
+### Alex
+
+### Gretchen
+
+Gretchen was very keen to praise the intended mind map section of the criteria (*Section 2*) and said "This looks like the program 
+could be very promising for applications in my buisness". 
+
+However, she did note that the inclusion of the flashcard features would not be of use and could become annoying if they were to 
+prominent. Because of this, it was decided that the configuration file should have a parameter to disable the flashcard features. Additionally, this functionality will extend to being able to choose to only have the flashcard feature over the mindmap feature. This addition can be seen in criterion 1.7 .
