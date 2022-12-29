@@ -27,7 +27,7 @@ def sort(data): #Bubble sort method, will aim to update to quicker sort incase o
     for i in range(0, len(data) -2):
         for j in range(0, len(data) - i - 1):
             if data[j].significance > data[j+1].significance:
-                data[j], data[j+1] = data[j+1], data[j]
+                data[j], data[j+1] = data[j+1], data[j] #Swap function
 
     print(data)
     
@@ -38,9 +38,7 @@ for i in range(0, 10): # Prototyping function to create flashcards, no additiona
     flashcards.append(Flashcard(confidence))
 
 for j in range(0, len(flashcards)):
-    #print(flashcards[j].confidence)
-    flashcards[j].update()
-    print(flashcards[j].significance)
-sort(flashcards)
-
-    
+    #print(flashcards[j].confidence) 
+    flashcards[j].update() 
+    print(flashcards[j].significance) 
+sort(flashcards) 

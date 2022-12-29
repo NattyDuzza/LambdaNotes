@@ -25,6 +25,7 @@ def flashcard_run(good, okay, bad):
             print(bad[i].back)
             if bad[i].update_confidence() == 1:
                 flashcard_sort(bad[i])
+        return False
 
 
 def flashcard_sort(flash):
@@ -34,6 +35,8 @@ def flashcard_sort(flash):
         flashcardsOkay.append(flash)
     elif flash.confidence == 'Bad':
         flashcardsBad.append(flash)
+    else:
+        print("Not configured confidence level")
     
 
 while x<3:
@@ -41,7 +44,10 @@ while x<3:
     flashcard_sort(flash)
     x+=1
 
-flashcard_run(flashcardsGood, flashcardsOkay, flashcardsBad)
+while True:
+    if flashcard_run(flashcardsGood, flashcardsOkay, flashcardsBad):
+        pass
+    break
 
 # for i in range(0, len(flashcardsGood)):
    # print(flashcardsGood[i].front, flashcardsOkay[i].front, flashcardsBad[i].front)
