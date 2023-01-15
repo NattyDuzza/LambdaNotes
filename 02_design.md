@@ -17,6 +17,22 @@ These features have already been discussed however this diagram provides a clear
 
 It was a clear decision to start the flow of the program from a home screen. The user can then decide which route to go down, mind map or flashcard. ([^1]) From here, they can decide whether to make a new instance of the tool they have chosen, or to inspect/edit an instance they have already edited previously. ([^1]:Please note that, although the arrows do not directly imply it in the diagram, that a user will be able to move back to the home screen to be able to change which tool they are using.)
 
+## Config File
+So as to add customisability to the user expeirience, the software will have optional modules and ways of operating, these will be defined in a configuration file that will be editible by the user. This refers to sections 1.7-1.8 of the success criteria.
+
+The file will take the form of a .txt file, with predefined places to put your options. I will slowly build up the fields in the file as they become needed, and the implementation they will affect gets to a point where a need for optional routes is clear.
+
+The following shows the final state of the configuration file:
+
+```
+LamdaNotes
+[version] = 0.0.1
+[mindmap-active]= true
+[flashcard-active] = true
+[flashcard-queue] = true
+
+``` 
+
 ## Flashcards
 
 I have decided to design this feature first since it went through less proof-of-concept prototyping in the *Analysis* phase. It is also poses a unique challenge compared to the rest of the project since it requires the combination of two programming languages (Python and SQL). 
@@ -54,4 +70,208 @@ It is also important the relational database will conform to ACID rules:
 - Atomicity: This will be enforced by checking the statement has been executed and, if not, diverting the flow of the program to a suitable location where the database will not be permanently affected.
 - Consistency: The addition of declaritive constraints will ensure each addition conforms to the database rules.
 - Isolation: Since the program will only be making transactions in a sequential manner, and the database will be stored locally with no possible outside access from other systems, Isolation will not be an issue and will be conformed to.
-- Durability: To ensure that all data entered from succesful transactions is permanently stored, the database will be consistently saved at regular intervals, reducing the chance of interference from, say, a system failure. 
+- Durability: To ensure that all data entered from succesful transactions is permanently stored, the database will be consistently saved at regular intervals, reducing the chance of interference from, say, a system failure.
+
+### Utilising Python To Execute SQL
+
+To create more complex conditional transactions, and to integrate the database into the program, I will use Python to control the databse through using it to execute SQL. 
+
+The following diagram shows the flow of the program from user input to permanent database change:
+
+![PythonDatabase](pictures/PythonDatabase.drawio.png)
+
+The four choices the user can make will be implemented in separate python classes which will form a library that can be imported into other files in the program structure. The classes will be:
+- General (this will handle subroutines that can often be used in more than one of the four areas in the diagram above.)
+- AddFlashcard (this will handle subroutines specific to adding flashcards.)
+- RmFlashcard (this will handle subroutines specific to removing flashcards.)
+- AddDeck (this will handle subroutines specific to adding a deck.)
+- RmDeck (this will handle subroutines specific to removing a deck.)
+
+The class diagram will be created once all the functions for each of the 4 main functions have been mapped out in the following sections.
+
+
+I will make use of SQlite3. This can be imported and used within Python, and also in console which will help with testing the Python script works as expected.
+
+##### Functions:
+
+From the previous diagram, I will now decompose and design the functions in a more intricate manner. This will take the form of a visual decomposition of each of the 4 overall functions in 2.3.4, followed by a list of subroutines described in detail to work together to create the overarching function required. 
+
+### User Adds Flashcard:
+
+The following diagram shows what this problem can be decomposed down to at a still moderately 'zoomed-out' view:
+
+
+![UserAddDecomp](pictures/FlashcardAddDecomp.drawio.png)
+
+
+The design incorporates two methods of flow through the program, based on a configuration file. This relates to 1.8 of the *Success Criteria*. Furthermore, the design also addresses 3.2 and 3.3 of the same criteria. The reason for having these two options is that if the user wants to minimise the chance of losing information, insantly adding any new flashcard to the persisten database is optimal. If, however, the user would prefer to be able to review the flashcards (e.g. remove or edit) before they are commited to the database, using a in-memory data structure would be suitable. The user can decide what is more important to them. For many users the program will seemingly run exactly the same, however for more involved users this flexibility aims to be a satisfying addition.
+
+I will now list out the functions that will be needed when implementing this script.
+
+#### CardPointer
+
+##### Use: 
+To keep track of what the next free cardID is, by searching the Database at the start, and then keeping track through a variable.
+
+##### Parameters: 
+None
+
+##### Variables:
+- *int* cardID (next free cardID)
+
+##### Returns: 
+Returns *cardID*
+
+##### Preconditions: 
+Database has been created with the Cardset and Flashcards tables.
+
+##### Class:
+General
+
+
+
+#### GetInput
+
+##### Use: 
+The subroutine will take a user input in. Validation will be used to check inputs are not null.
+
+##### Parameters: 
+None
+
+##### Variables: 
+- *string* input (the input the user puts in)
+
+##### Returns: 
+Returns the input in a list-based format.
+
+##### Preconditions: 
+There are no preconditions to the use of GetInput, since validation is used.
+
+##### Class:
+AddFlashcard
+
+
+
+#### FormatInputSQL
+
+##### Use: 
+The subroutine will take an input as a parameter, and put it into a correct format to be passed into an SQL statement. 
+
+##### Parameters: 
+- contents (a list of elements that must be put into the SQL statement.
+
+##### Variables: 
+- *string* statement (the formatted SQL statement)
+
+##### Returns: 
+Returns the formatted SQL / returns variable *statement*. 
+
+##### Preconditions: 
+Data passed through *contents* parameter is in the format : (UPDATE AFTER IMPLEMENTATION!!!!)
+
+##### Class:
+AddFlashcard
+
+
+#### ConfigCheck
+
+##### Use:
+To check the config file and alter the flow of the program according to the user's chosen method.
+
+##### Parameters:
+- ConfigFile.txt
+
+##### Variables:
+- *bool* queueFlowType (the chosen method to move through the program)
+
+##### Returns:
+- *queueFlowType*
+
+##### Preconditions:
+- ConfigFile.txt exits
+- ConfigFile.txt is in the required format / is not null.
+
+##### Class:
+AddFlashcard
+
+
+#### NewQueue
+
+##### Use:
+The subroutine will create a queue to add flashcard information to until the user is ready to exit, if this option is chosen through the config file. 
+
+##### Parameters: 
+None
+
+##### Variables:
+ADD AFTER IMPLEMENTATION
+
+##### Data Structure:
+Queue
+
+##### Returns:
+No return, Queue will be in the wider scope and so can be accessed from the other subroutines.
+
+##### Preconditions:
+None
+
+##### Class:
+General
+
+
+
+#### EnQueue
+
+##### Use:
+The subroutine will add a set of flashcard information into the queue, in the same form as *GetInput()* returns said information.
+
+##### Parameters:
+- return data from *GetInput()*
+
+##### Variables:
+ADD AFTER IMPLEMENTATION
+
+##### Data Structure:
+Queue
+
+##### Returns:
+No return.
+
+##### Precondtions:
+- *NewQueue()* has been executed/there is a queue to add to. 
+
+##### Class:
+General
+
+
+#### cursor.execute (from SQLite3 library)
+
+##### Use:
+To execute the SQL statement within it on the persistent database stored in a stated directory.
+
+##### Parameters: 
+*statement* variable (SQL statement)
+
+##### Variables:
+N/A
+
+##### Returns:
+No return in the usual sense; changes the SQL database.
+
+##### Preconditions:
+- Parameter is not null.
+- SQL statement is valid by the SQLite3 rules.
+
+
+### User Adds Flashcard Testing
+
+This function of the program should have a predictable, reproducible output. It is clearly defined what must happen, and we can see if this is working through the use of the terminal SQLite3 interface. I will carry out the following tests during devlopement:
+
+##### During Writing Code: 
+- (1) Consistently test each subroutine in an isolated environment.
+- (2) Consistently make sure the flow of each subroutine into another works as exected (any two subroutines in isolation).
+- (3) Test how the program handles errors, e.g. a precondition of a subroutine being ignored. 
+
+##### After All Subroutines Are Written:
+- (4) Make sure this singular function of the program is logically working as expected when subroutines are combined.
+Note: This will isolate the function *User Adds Flashcards*, and not test it incorporated in the wider program (this will come later).

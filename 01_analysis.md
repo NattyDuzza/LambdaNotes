@@ -48,12 +48,12 @@ All stakeholders have been briefed on what LambdaNotes aims to achieve.
 
 Rupert attends a non-selective state school. He is known as a struggling student. It is believed he is struggling due to work ethic rather than any kind of learning disability.
 
-##### Interview - Predefined Questions
+###### Interview - Predefined Questions
 
 
 - Q: Would you class yourself as a enthusiastic student?
 
-  A: No, I find myself not enjoying school most of the time. I always look forward to the weeExemplar Candidate Work6A Level Computer Sciencekend. 
+  A: No, I find myself not enjoying school most of the time. I always look forward to the weeekend. 
 
 - Q: How much time would you say you study for a week outside of school (not including homework)?
 
@@ -80,7 +80,7 @@ Rupert attends a non-selective state school. He is known as a struggling student
   A: Something quick. I want to able to get a lot of revision done in a short time so I can get on with other things.
 
 
-##### Interview - Personalised Questions
+###### Interview - Personalised Questions
 
 
 - Q: You said you think mind maps are better than normal notes. Why is that? 
@@ -96,7 +96,7 @@ Rupert attends a non-selective state school. He is known as a struggling student
   A: Very boring. It's no different to just copying notes down on paper really.
 
 
-##### Interview Analysis
+###### Interview Analysis
 
 
 - Personality: Rupert does not have much motivation when it comes to revising, often choosing to not spend effort on it. Hence, his 
@@ -115,7 +115,7 @@ Rupert attends a non-selective state school. He is known as a struggling student
 
 Alex is known to be a hard working student who strives for the top grades. He has aspirations to be a Doctor of Medicine and to study for this at Oxford University. 
 
-##### Interview - Predefined Questions
+###### Interview - Predefined Questions
 
 - Q: Would you class yourself as a enthusiastic student?
 
@@ -146,17 +146,17 @@ Alex is known to be a hard working student who strives for the top grades. He ha
   A: I would like to see a feature that has a 'recommended' section that suggests pages that haven't been visited in a while.
 
 
-##### Interview - Personalised Questions
+###### Interview - Personalised Questions
 
 
-##### Interview Analysis
+###### Interview Analysis
 
 
 #### Gretchen (Wedding Planner)
 
 Gretchen is a self-employed wedding planner, having been in the buisness for 22 years. She, at anyone time, can be planning up to 20 ceremonies. 
 
-##### Interview - Predefined Questions
+###### Interview - Predefined Questions
 
 
 - Q: How do you go about planning a wedding?
@@ -171,7 +171,7 @@ Gretchen is a self-employed wedding planner, having been in the buisness for 22 
 
   A: Although I am happy with the system I have developed over the last 20 years, I would consider using a novel piece of software to work in conjunction with what I already do. There's definitely space for an extra supplementary tool. 
 
-##### Interview - Personalised Questions
+###### Interview - Personalised Questions
 
 
 - Q: You said that sometimes there are discrepanicies between what the partners want. How could a system based on links between items be of use to you in this context?
@@ -183,7 +183,7 @@ Gretchen is a self-employed wedding planner, having been in the buisness for 22 
   A: Well you have said it will be free, I think I would recommend it to my clients. What have they got to lose? If the outcomes can be viewed on both of our systems it will streamline the process significantly. 
 
 
-##### Interview Analysis
+###### Interview Analysis
 
 
 - Personality: Gretchen shows a professional outlook which will be incredibly useful when it comes to user feeback as we develop the 
@@ -221,26 +221,26 @@ The analyses of these will be formatted as following:
 ## Planned Solution
 
 ### Visual 
-##### UI:
+###### UI:
 
 
 The program will boot into a window featuring a simple to understand UI. This menu will have options to open a current mind map,
 make a new one or see a manual for the program.
 
 
-##### Mind Map:
+###### Mind Map:
 
 
 Upon a point of the user's choice, an output will be available to see the representation of how the data is being stored. This will be either a JPEG, PNG, PDF or SVG based on the users choice of configuration. 
 
 
-##### Added Information:  
+###### Added Information:  
 
 
 The user will be able to choose a node and put additional information 'underneath' it. This can then be retrieved when needed.
 
 
-##### Revision Suggestions:
+###### Revision Suggestions:
 
 
 The program will be able to suggest nodes to the user that they may have not visited/inspected recently.
@@ -249,7 +249,7 @@ The program will be able to suggest nodes to the user that they may have not vis
 ### Computational
 
 
-##### Pathfinding:
+###### Pathfinding:
 
 
 The user will have the option to find links between two nodes anywhere on the mind map. If chosen, multiple pathways will be outputted.
@@ -257,7 +257,7 @@ This is so that the idea of how information is linked (which has been seen to be
 In a context of studying, this will help build links between knowledge and hence help retainment.
 
 
-##### Date Storage / Databases:
+###### Date Storage / Databases:
 
 
 The data created by a creation of a Mind Map will be stored in some way for later retrieval. Furthermore, (although not a success 
@@ -265,7 +265,7 @@ criteria of the project) it would be optimal to have a website where users can u
 could also be used as the landing page to download the software.
 
 
-##### Installer:
+###### Installer:
 
 
 The program will be downloaded through an installer that will render the program as an executable, and make sure the required packages are also installed to the end users machine.
@@ -303,6 +303,8 @@ The following table contains the success criteria for the project. It uses a num
 | 1.6 | Data safe exit of application (e.g. Notifying user they have unsaved chages). **Note**: Depending on the implementation of how data is stored, an active check may not be necessary |
 | | |
 | 1.7 | Configuration of program should allow user to specify which modules they want active/accessible (mind maps, flashcards or both)
+| | |
+| 1.8 | Configuration of program should be handeled using a user-editible configuration file |
 | | |
 | 2.1 | Able to export visual representation of mind map into a visual picture format |
 | | |
