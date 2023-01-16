@@ -80,7 +80,7 @@ The following diagram shows the flow of the program from user input to permanent
 
 ![PythonDatabase](pictures/PythonDatabase.drawio.png)
 
-The four choices the user can make will be implemented in separate python classes which will form a library that can be imported into other files in the program structure. The classes will be:
+The four choices the user can make will be implemented in separate python classes which will form a library that can be imported into other files in the program structure. This is not implemented this way so as to use an object oriented methodology at this time, it is due to the ease of accessing specific functions from the library in external programs; using a class system improves naming conventions, e.g. AddFlashcard.create() can be different to AddDeck.create(). The classes will be:
 - General (this will handle subroutines that can often be used in more than one of the four areas in the diagram above.)
 - AddFlashcard (this will handle subroutines specific to adding flashcards.)
 - RmFlashcard (this will handle subroutines specific to removing flashcards.)

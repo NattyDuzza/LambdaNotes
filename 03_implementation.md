@@ -152,9 +152,185 @@ I am now happy SQLite3 is working correctly in its Python implementation and can
 
 ### Setting up FlashcardFunctions Library
 
+In the *Design* section, 5 classes were used to organise functions that would make up the FlashcardFunction external library. To start the implementation of this, I first created a new file called FlashcardFunction.py and added the class definitions. No constructor function is being used here since, at least at this stage, nothing of the sort is required. (Please remember that the class system is for organizational purposes in this library, the code does not require the idea of objects.)
+
+```python
+class General: #class for general function that may be used my any of the proceeding classes.
+
+class AddFlashcards: #class specifically for functions for adding flashcards
+
+class RmFlashcards: #class specifically for functions for removing flashcards
+
+class AddDeck: #class specifically for functions for adding a deck
+
+class RmDeck: #class specifically for functions for removing a deck
+```
 
 
 ### User Adds Flashcards
 
 In section 2.4.5, I laid out a clear design for the functions that would be needed to create the function of a user adding a flashcard to any specified database. I now will implement it and test it according to the specifications in 2.4.5. 
 
+The code snippets included in the following sections will exclude many of the class definitions in *FlashcardFunctions* and only show the necessary code/changes that have been made. At the top of each code snippet, however, there will be a comment stating which file it is in, however this comment is **not** there in the actual code and is soely for documenting purposes in this report.
+
+To test the code as I go along, I have made a python script called TestingEnvironment.py which I will use to test how subroutines are working and performing as I continue to implement.
+
+#### ConfigCheck
+
+I decided to implement this function first since it largely affects how the rest of the code runs in this section. For efficiency, *config.txt* only includes the fields up to and including *flashcard-queue*, since that is the only field being used in the development of this section. In the next sections *config.txt* will grow to accomodate what is needed in those sections. To test the config file could be read correctly, I wrote the following:
+
+```python
+#in FlashcardFunctions.py
+class AddFlashcards: #class specifically for functions for adding flashcards.
+
+
+    def ConfigCheck():
+        file = open("config.txt", "r")
+        print(file.read())
+```
+This code aims to simply open the configuration file and print its contents to the screen. To test this I would call the function like such:
+
+```python
+#in TestingEnvironment.py
+
+import FlashcardFunctions as Ff #imports library I have written
+
+Ff.AddFlashcards.ConfigCheck() #calls the ConfigCheck() function from AddFlashcard class
+```
+
+When I ran this, the output I expected was:
+
+```
+LambdaNotes
+[version] = 0.0.1
+[mindmap-active] = true
+[flashcard-active] = true
+[flashcard-queue] = true
+```
+
+However, this is the output I did get:
+
+![ConfigFail1](pictures/ConfigFail1.png)
+
+Clearly I need to add something to the empty classes. To do this I will add a *Null* function to each class for the duration of development, until they have their own functions implemented. Please see the revised code, and output after the changes have been made:
+
+```python
+#from FlashcardFunctions.py
+
+class General: #class for general function that may be used my any of the proceeding classes.
+    
+
+    def Null():
+        pass
+
+class AddFlashcards: #class specifically for functions for adding flashcards.
+
+
+    def ConfigCheck():
+        file = open("config.txt", "r")
+        print(file.read())
+
+class RmFlashcards: #class specifically for functions for removing flashcards.
+    
+
+    def Null():
+        pass
+
+class AddDeck: #class specifically for functions for adding a deck.
+    
+
+    def Null():
+        pass
+
+class RmDeck: #class specifically for functions for removing a deck.
+    
+
+    def Null():
+        pass
+```
+Output:
+
+![ConfigFix1](pictures/ConfigFix1.png)
+
+The code works as expected and so I will leave these additional function in until there is a chance to replace them. I am using them rather than a constructor because I beleive it reduces any chance of confusion.
+
+Now, I will change the code to only read a specific line. Since the design of the congiuration file is such that each field has a designated line, I can hard code the line that must be read. Additionally, since it is a precondition that the configuration file is kept in the correct format, I can presume that the value of each field (e.g. true or false) always begins at the same index of the string that is read into the program.
+
+The following code aims to single out the value of the [flashcard-queue] field, which is what is needed for the rest of the subroutine.
+
+```python
+
+    #from FlashcardFunctions.py
+
+    def ConfigCheck():
+        file = open("config.txt", "r")
+        config = file.readlines()[4] #reads line 4, which is where flashcard-queue is defined to be.
+        config = config[20:] #cuts out the unecessary information, to single out the only important piece of information (true or false)
+        print(config)
+```
+
+When run, the code produced the following output:
+
+![ConfigOutput1](pictures/ConfigOutput1.png)
+
+The code successfully isolates the value of the field important for this process. This value needs to be checked and placed into a variable that can be accessed by other subroutines in the class. I am future proofing the development by placing the value in a variable; I could just return the value read, or return a boolean value, however by putting it in a variable I still have the option of using object oriented variables at a later date if the planned solution of simply returning to other subroutines.
+
+After another addition of code, the code looks as such:
+
+```python
+
+#from FlashcardFunctions.py
+
+class AddFlashcards: #class specifically for functions for adding flashcards.
+
+
+    def ConfigCheck():
+        file = open("config.txt", "r")
+        config = file.readlines()[4] #reads line 4, which is where flashcard-queue is defined to be.
+        config = config[20:] #cuts out the unecessary information, to single out the only important piece of information (true or false)
+        file.close()
+
+        #the following selection statements compare the value isolated from the file and returns a suitable boolean value.
+        if config == "true": 
+            queueFlowType = True
+        elif config == "false":
+            queueFlowType = False
+        else:
+            print("ERROR: CONFIGURATION FILE - WRONG FORMAT")
+            quit() #since correct config format is a precondition of the subroutine, no handling is done if the data read does not go to plan. The program simply puts an error message in the console and quits.
+
+
+        return queueFlowType
+
+``` 
+The code in the test environment should now output True, since this is what will be returned by the subroutine with the configuration file in its current state. Using a slight change in TestingEnvironement.py to print out the result of the function [1.1], I run the code and get the following output:
+
+![ConfigFail2](pictures/ConfigFail2.png)
+
+This output suggests that the 'true' that should be being snipped from the config file is ,in fact, slightly wrong. I believe the problem is due to me forgetting the actual format will be 'true\n'. To fix this, I will define where the substring will end, rather than leaving it to finish at the end of the line, hence excluding the '\n'.
+
+This is a simple fix:
+
+```python
+#from FlashcardFunctions.py
+
+def ConfigCheck():
+        file = open("config.txt", "r")
+        config = file.readlines()[4] #reads line 4, which is where flashcard-queue is defined to be.
+        config = config[20:-1] #cuts out the unecessary information, to single out the only important piece of information (true or false)
+        file.close()
+```
+
+The [20:-1] ends the substring one before the end, which makes the code compatible with both 'true' and 'false' and with more specific values to the fields if ever needed in a future version of the program (beyond the scope of the project). 
+
+Running *TestingEnvironment.py* again, the output is corrected:
+
+![ConfigOutputTrue1](pictures/ConfigOutputTrue1.png)
+
+I also changed the value of [flashcard-queue] to 'false' in *config.txt* to test it would work as expected:
+
+![ConfigOutputFalse1](pictures/ConfigOutputFalse1.png)
+
+Finally, I put an invalid output into the field in the configuration file to test the output:
+
+![ConfigForcedFail1](pictures/ConfigForcedFail1.png)
