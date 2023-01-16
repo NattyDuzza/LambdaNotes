@@ -334,3 +334,43 @@ I also changed the value of [flashcard-queue] to 'false' in *config.txt* to test
 Finally, I put an invalid output into the field in the configuration file to test the output:
 
 ![ConfigForcedFail1](pictures/ConfigForcedFail1.png)
+
+Everything is working as expected, however I want to restructure my code slightly to use the AddFlashcards class as an object. Initially I had not planned to do this, and the class system was purely for organisational purposes. However, now I am implementing it, using an OO paradigm is appearing to be the most stable way of implementing the software. This is because I do not have to rely on return statements, but use OO programming to use class attributes.
+
+Implementing this paradigm shift leads to the following:
+
+```python
+#from FlashcardFunctions.py
+
+class AddFlashcards: #class specifically for functions for adding flashcards.
+    
+
+    def __init__():
+        self.queueFlowType = None
+
+    def ConfigCheck():
+        file = open("config.txt", "r")
+        config = file.readlines()[4] #reads line 4, which is where flashcard-queue is defined to be.
+        config = config[20:-1] #cuts out the unecessary information, to single out the only important piece of information (true or false)
+        file.close()
+
+        #the following selection statements compare the value isolated from the file and returns a suitable boolean value.
+        if config == "true": 
+            self.queueFlowType = True
+        elif config == "false":
+            self.queueFlowType = False
+        else:
+            print("ERROR: CONFIGURATION FILE - WRONG FORMAT")
+            quit() #since correct config format is a precondition of the subroutine, no handling is done if the data read does not go to plan. The program simply puts an error message in the console and quits.
+
+
+        return self.queueFlowType #returns variable in classical way; may not be needed but I believe it is good to have the option to use it this way.
+```
+
+This produces the same outputs as before when using a slightly modified version of the previous iteration of TestingEnvironment.py since it is still implemented to return the variable as before, just with the inclusion of Python's 'self' constructs. The testing environment now creates a new AddFlashcard object and then calls the CheckConfig function. (See [1.2])
+
+For now, I am happy that CheckConfig() works as intended and will continue to work when used by other subroutines.
+
+
+#### GetInput
+

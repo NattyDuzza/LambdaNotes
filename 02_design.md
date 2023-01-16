@@ -80,7 +80,8 @@ The following diagram shows the flow of the program from user input to permanent
 
 ![PythonDatabase](pictures/PythonDatabase.drawio.png)
 
-The four choices the user can make will be implemented in separate python classes which will form a library that can be imported into other files in the program structure. This is not implemented this way so as to use an object oriented methodology at this time, it is due to the ease of accessing specific functions from the library in external programs; using a class system improves naming conventions, e.g. AddFlashcard.create() can be different to AddDeck.create(). The classes will be:
+These four major functions will be implemented in an external file using four classes. This allows for the possibility of using a fully object-oriented (OO) paradigm, however it may not be necessary to use OO constructors such as a constructor function in some of the classes.
+
 - General (this will handle subroutines that can often be used in more than one of the four areas in the diagram above.)
 - AddFlashcard (this will handle subroutines specific to adding flashcards.)
 - RmFlashcard (this will handle subroutines specific to removing flashcards.)
@@ -107,6 +108,24 @@ The following diagram shows what this problem can be decomposed down to at a sti
 The design incorporates two methods of flow through the program, based on a configuration file. This relates to 1.8 of the *Success Criteria*. Furthermore, the design also addresses 3.2 and 3.3 of the same criteria. The reason for having these two options is that if the user wants to minimise the chance of losing information, insantly adding any new flashcard to the persisten database is optimal. If, however, the user would prefer to be able to review the flashcards (e.g. remove or edit) before they are commited to the database, using a in-memory data structure would be suitable. The user can decide what is more important to them. For many users the program will seemingly run exactly the same, however for more involved users this flexibility aims to be a satisfying addition.
 
 I will now list out the functions that will be needed when implementing this script.
+
+#### Constructor / __init__
+
+##### Use:
+To create a 'Flashcard Adder' object to be used to add flashcards to a deck.
+
+##### Parameters:
+- *bool* queueFlowType
+
+##### Returns:
+N/A
+
+##### Preconditions:
+
+##### Class:
+AddFlashcard
+
+
 
 #### CardPointer
 

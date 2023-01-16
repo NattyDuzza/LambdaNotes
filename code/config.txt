@@ -1,0 +1,5 @@
+LambdaNotes
+[version] = 0.0.1
+[mindmap-active] = true
+[flashcard-active] = true
+[flashcard-queue] = true
