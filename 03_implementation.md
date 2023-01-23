@@ -25,7 +25,7 @@ CREATE TABLE Flashcards(
    back varchar NOT NULL,
    significance float NOT NULL,
    setID int NOT NULL,
-   CONSTRAINT FK_setID foreign key (setID)
+2023-01-23_17-38   CONSTRAINT FK_setID foreign key (setID)
    REFERENCES Cardset(setID)
 );
 ```
@@ -103,7 +103,7 @@ Results in:
 ```
 Which is not what I want in the final implementation. I will keep the OR IGNORE feature for now since it does prevent a possible error.
 
-### Setting Up SQLite3 in Python
+#### Setting Up SQLite3 in Python
 
 At this stage I have already downloaded SQLite3 using my native linux package manager. This section is to confirm the package is working correctly, and can be used to create and retrieve from databases as required by the program.
 
@@ -373,4 +373,196 @@ For now, I am happy that CheckConfig() works as intended and will continue to wo
 
 
 #### GetInput
+
+The *GetInput* function will look vastly different by the time of finishing the development since packaging it into a GUI will change how it takes the input (won't be through console anymore). At this stage, which is creating a console prototype and a set of functions that can be tweaked at the GUI stage, this function is very simple to implement.
+
+The preliminary version ended up like so:
+```python
+#from FlashcardFunctions.py, in AddFlashcard class
+
+    def GetInput(self): #will need to be updated when packaged into a GUI.
+        valid = True #used to check input is valid
+        front = input("Please input front: ")
+        back = input("Please input back: ")
+        conf = input("Please input initial confidence: ")
+        
+        if not front: #the following statements check the inputs are not null, and if they are, change the valid variable accordingly.
+            print("Error")
+            valid = False
+        if not back:
+            print("Error")
+            valid = False
+        if not conf:
+            print("Error")
+            valid = False
+
+        if valid == False:
+            quit() #quits if inputs are invalid
+
+        self.inputsList = [front, back, conf] #adds the three inputs into a list.
+
+```
+
+To test this, I change the testing file:
+
+```python
+import FlashcardFunctions as Ff
+
+Adder = Ff.AddFlashcards() #to create AddFlashcard 'Adder' object
+
+#print(Adder.ConfigCheck())
+
+Adder.GetInput()
+```
+
+Testing valid inputs:
+
+![GetInputTest1](pictures/GetInputTest1.png)
+
+This works to the current rules of validation (entries are not null), however since confidence must be one of three values, 'good' or 'okay' or 'bad', for the following algorithms to decide the suggestion order I will add extra validation for this entry field.
+
+Testing invalid inputs:
+
+![GetInputTest2](pictures/GetInputTest2.png)
+
+Although this works (it exits with an error), it is not optimal to have the error message printed thrice.
+
+The following code iteration implements fixes for both 'issues' above:
+
+```python 
+#from FlashcardFunctions.py, from class AddFlashcard
+
+    def GetInput(self): #will need to be updated when packaged into a GUI.
+        valid = True #used to check input is valid
+        front = input("Please input front: ")
+        back = input("Please input back: ")
+        conf = input("Please input initial confidence: ")
+        validConf = ['good', 'okay', 'bad'] #set of valid confidences, in list form for possibility of extra options in the future. 
+    
+        if not front: #the following statements check the inputs are not null, and if they are, change the valid variable accordingly.
+            valid = False
+        if not back:
+            valid = False
+        
+        if conf not in validConf: #checks if users input is not in set of valid inputs. 
+            valid = False
+
+        if valid == False:
+            print("Error")
+            quit() #quits if inputs are invalid
+            
+        self.inputsList = [front, back, conf] #adds the three inputs into a list.
+```
+
+Running the test script now with the same inputs as last time:
+
+![GetInputTest4](pictures/GetInputTest4.png)
+
+In this test, there is now an error thrown up. This is due to 'Testing' not being in the list of valid confidence settings.
+
+![GetInputTest5](pictures/GetInputTest5.png)
+
+This test data now results in only one error message being outputted, which is what was wanted.
+
+This subroutine now completes its job as required, therefore I am happy to move on to another. 
+
+#### CardPointer
+
+This function is the first that have been implemented in this class to use the SQLite3 functionality. Therefore, before I start coding the functionality, I need to make some additions to what has already been made:
+Firstly, I put the import statement at the top of the FlashcardFunctions.py file, as so:
+
+```python
+import sqlite3 as sql
+```
+
+Next, I add to the AddFlashcard class constructor:
+
+```python
+def __init__(self, database):
+    self.queueFlowType = None
+    con = sql.connect(database)
+    self.cur = con.cursor()
+```
+
+This creates a cursor object as we did in the SQLite3 testing, however this time it is a class attribute.
+
+Now, I create the CardPointer function, and add some preliminary code:
+
+```python
+#from FlashcardFunctions.py, in class AddFlashcards
+
+    def CardPointer(self):
+        res = self.cur.execute(''' SELECT MAX(CardID)
+                                      FROM Flashcards; ''') #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package.
+        cardID = res.fetchall() #fetches result of SQL transaction
+        print(cardID)
+```
+
+To test this, I will edit TestingEnvironment.py, and create a database using a new script for prototyping called FlashcardDatabase.py:
+
+TestingEnvironment.py:
+```python
+import FlashcardFunctions as Ff
+
+Adder = Ff.AddFlashcards("databases/Flashcards.db") #to create AddFlashcard 'Adder' object
+
+#print(Adder.ConfigCheck())
+
+#Adder.GetInput()
+
+Adder.CardPointer()
+```
+
+FlaschardDatabase.py:
+```python
+import sqlite3 as sql #imports package into Python under more efficient name
+
+con = sql.connect("Flashcards.db") #creates a connection to the database test.db.
+# Flashcards.db will be created in the current working directory if not already made.
+
+cur = con.cursor() #creates a database cursor which is needed to execute statements and retrieve data.
+
+cur.execute("""
+            CREATE TABLE Cardset(
+            setID int primary key NOT NULL,
+            setName varchar NOT null
+            );""")
+
+cur.execute("""            
+            CREATE TABLE Flashcards(
+            cardID int primary key NOT NULL,
+            front varchar NOT NULL,
+            back varchar NOT NULL,
+            significance float NOT NULL,
+            setID int NOT NULL,
+            CONSTRAINT FK_setID foreign key (setID)
+            REFERENCES Cardset(setID)
+            );
+            """) #creates tables
+
+cur.execute("""
+            INSERT INTO Cardset(setID, setName) VALUES (001, "Computer Science");
+            """)
+
+cur.execute("""
+            INSERT INTO FLashcards
+            (cardID, front, back, significance, setID) VALUES (001, "a", "b", 10.0, 001);
+            """)
+
+con.commit() #commits the transactions
+```
+The above code uses the same SQL table definitions as in 3.1.1.1. When I run TestingEnvironment now, the max CardID should simply be 1. 
+Testing this:
+
+![CardPointerTest1](pictures/CardPointerTest1.png)
+
+The numerical answer is correct, however it is in a sub-optimal format. It is clear that the data is being stored as a list of tuples, and so to fix this I changed the code to the following:
+
+```python
+#from FlashcardFunctions.py, in class AddFlashcard
+
+        cardID = res.fetchall() #fetches result of SQL transaction
+        cardID = cardID[0][0] #isolates value from list of tuples
+        print(cardID)
+```
 
