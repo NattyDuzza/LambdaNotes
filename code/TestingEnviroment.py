@@ -1,6 +1,6 @@
 import FlashcardFunctions as Ff
 
-Adder = Ff.AddFlashcards("databases/Flashcards.db") #to create AddFlashcard 'Adder' object
+Adder = Ff.AddFlashcards("databases/Flashcards.db", '1') #to create AddFlashcard 'Adder' object
 
 #print(Adder.ConfigCheck())
 

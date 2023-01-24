@@ -566,3 +566,51 @@ The numerical answer is correct, however it is in a sub-optimal format. It is cl
         print(cardID)
 ```
 
+At this point, I realise that the code has not got a manner in which the Cardset to be search can be defined. To change this, I add an additional parameter (the setID) and then add to the SQL statement to narrow down the options:
+
+```python
+#from FlashcardFunctions.py, class AddFlashcard
+
+    def __init__(self, database, setID):
+        self.queueFlowType = None
+        con = sql.connect(database)
+        self.cur = con.cursor()
+        self.setID = setID
+
+--------------------------------------------------------- lines emitted for ease of reading.
+
+#from CardPointer()
+
+        res = self.cur.execute(""" 
+                                SELECT MAX(CardID)
+                                FROM Flashcards
+                                WHERE setID = ?;""", (self.setID,)) #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package. Use of '?' is sqlite3 method for inputting variable into the statement. 
+```
+Since the class now takes an extra parameter on instantiation, the testing script must be changed accordingly:
+
+```python
+#from TestingEnvironment.py
+
+import FlashcardFunctions as Ff
+
+Adder = Ff.AddFlashcards("databases/Flashcards.db", '1') #to create AddFlashcard 'Adder' object
+
+#print(Adder.ConfigCheck())
+
+#Adder.GetInput()
+
+Adder.CardPointer()
+```
+
+You can see that I am using setID '1', since that is the only Cardset currently in the database created earler:
+
+![SQLiteProof1](pictures/SQLiteProof1.png)
+
+Since there is also only one flashcard in this deck, the output when TestingEnvironment.py is ran should be identical to last time. Running the script,
+
+![CardPointerTest2](pictures/CardPointerTest2.png)
+
+confirms that this is the case. 
+
+The next step to doing preliminary testing is to add/remove flashcards through this SQLite3 interface, and rerunning the test. 
+In the following examples, I will show the flashcards added (the contents of which will simply be placeholder) through said interface and the resulting output of TestingEnvironment being ran.

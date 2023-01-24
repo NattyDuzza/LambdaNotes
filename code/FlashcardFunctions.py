@@ -8,10 +8,11 @@ class General: #class for general function that may be used my any of the procee
 class AddFlashcards: #class specifically for functions for adding flashcards.
     
 
-    def __init__(self, database):
+    def __init__(self, database, setID):
         self.queueFlowType = None
         con = sql.connect(database)
         self.cur = con.cursor()
+        self.setID = setID
 
     def ConfigCheck(self):
         file = open("config.txt", "r")
@@ -52,8 +53,10 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
         self.inputsList = [front, back, conf] #adds the three inputs into a list.
 
     def CardPointer(self):
-        res = self.cur.execute(''' SELECT MAX(CardID)
-                                      FROM Flashcards; ''') #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package.
+        res = self.cur.execute(""" 
+                                SELECT MAX(CardID)
+                                FROM Flashcards
+                                WHERE setID = ?;""", (self.setID,)) #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package.
         cardID = res.fetchall() #fetches result of SQL transaction
         cardID = cardID[0][0]
         print(cardID)
