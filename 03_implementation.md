@@ -621,11 +621,11 @@ Firstly, I add 2 extra flashcards of cardID 2 and 10.
 
 The max cardID in the Computer Science Cardset is now clearly 10. Running TestingEnvironment.py shows the code is working correctly, identifying 10 as the max cardID:
 
-![SQLiteAddCorrect1](picutres/SQLiteAddCorrect1.png)
+![SQLiteAddCorrect1](pictures/SQLiteAddCorrect1.png)
 
 To further test whether the code can account for removals of cards, I use the SQLite interface to remove the flashcard with cardID 10:
 
-![SQLiteAdd2](picutres/SQLiteAdd2.png)
+![SQLiteAdd2](pictures/SQLiteAdd2.png)
 
 Now the max cardID in the specified Cardset is 2, and is correctly outputted when running the test script:
 
@@ -660,7 +660,7 @@ ADD TESTING LATER.
 
 #### FormatInputSQL
 
-Now we have a function that can assign the primary key to an entry in the Flashcard table, it is a good time to write the subroutine that can format the users previous inputs into SQL. This will be done by taking the user inputs and concanetenating them with other, pre-defined strings to create a SQL transaction in the correct format. 
+Now we have a function that can assign the primary key to an entry in the Flashcard table, it is a good time to write the subroutine that can format the users previous inputs into SQL. Originally I had planned to use string concatenation to create the SQL statement. However, after learning of SQLite's method of using '?' to denote where variables defined in a second parameter will be placed (I first used this in the CardPointer function), this is clearly better. 
 
 Since the subroutine must be compatible with both addition flow types (as defined by the users set up in the configuration file), the subroutine's return must not be based on which flow type is being used, but a general method that works for both. 
 Because of this ensured compatibility, I will also place the cursor.execute statement in this subroutine; this means that FormatInputSQL will be the last step for the flashcard data before it is commited to the database. Note, however, that the actuall *commit* statement will only be executed in the FormatInputSQL subroutine **if** the flow type is non-queue. If the queue is being used, the commitstatement will be placed in the DeQueue function, after FormatInputSQL has been called on all the queue elements.

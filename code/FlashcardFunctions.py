@@ -68,6 +68,7 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
 
     def FormatInputSQL(self):
         
+        
 
 class RmFlashcards: #class specifically for functions for removing flashcards.
     
