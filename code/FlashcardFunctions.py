@@ -1,9 +1,12 @@
 import sqlite3 as sql
 class General: #class for general function that may be used my any of the proceeding classes.
 
+    def NewQueue(): #creates list to act as queue.
+        queue = []
+        return queue
 
-    def Null():
-        pass
+    def EnQueue(queue, element): #takes in a pointer to a list and the element to be added, and appends the element to the list.
+        queue.append(element)
 
 class AddFlashcards: #class specifically for functions for adding flashcards.
     
@@ -30,6 +33,7 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
             quit() #since correct config format is a precondition of the subroutine, no handling is done if the data read does not go to plan. The program simply puts an error message in the console and quits.
         
         return self.queueFlowType #returns variable in classical way; may not be needed but I believe it is good to have the option to use it this way.
+ 
     
     def GetInput(self): #will need to be updated when packaged into a GUI.
         valid = True #used to check input is valid
@@ -60,6 +64,10 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
         cardID = res.fetchall() #fetches result of SQL transaction
         cardID = cardID[0][0]
         print(cardID)
+
+
+    def FormatInputSQL(self):
+        
 
 class RmFlashcards: #class specifically for functions for removing flashcards.
     

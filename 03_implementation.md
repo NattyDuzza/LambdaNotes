@@ -614,3 +614,61 @@ confirms that this is the case.
 
 The next step to doing preliminary testing is to add/remove flashcards through this SQLite3 interface, and rerunning the test. 
 In the following examples, I will show the flashcards added (the contents of which will simply be placeholder) through said interface and the resulting output of TestingEnvironment being ran.
+
+Firstly, I add 2 extra flashcards of cardID 2 and 10. 
+
+![SQLiteAdd1](pictures/SQLiteAdd1.png)
+
+The max cardID in the Computer Science Cardset is now clearly 10. Running TestingEnvironment.py shows the code is working correctly, identifying 10 as the max cardID:
+
+![SQLiteAddCorrect1](picutres/SQLiteAddCorrect1.png)
+
+To further test whether the code can account for removals of cards, I use the SQLite interface to remove the flashcard with cardID 10:
+
+![SQLiteAdd2](picutres/SQLiteAdd2.png)
+
+Now the max cardID in the specified Cardset is 2, and is correctly outputted when running the test script:
+
+![SQLiteAddCorrect2](pictures/SQLiteAddCorrect2.png)
+
+At this point, I am happy the code is doing what it is expected to, and I can continue on to implement the next subroutine.
+
+#### NewQueue + EnQueue
+
+NewQueue is a very simple subroutine. All it must do is creat an empty list/queue that can be subsequently appened to if necessary. 
+EnQueue is similarly easy to implement, since it just needs to be a generalised/asbtracted function to add to any given list.
+
+The two subroutines are made to be abstracted, they are generalised and so are in the General class.
+The code is as follows:
+
+```python
+#from FlashcardFunctions.py
+
+class General: #class for general function that may be used my any of the proceeding classes.
+
+    def NewQueue(): #creates list to act as queue.
+        queue = []
+        return queue
+
+    def EnQueue(queue, element): #takes in a pointer to a list and the element to be added, and appends the element to the list.
+        queue.append(element)
+```
+The ease of creating lists in Python compared to, say, arrays in C++ makes these two subroutines somewhat redundant in that they could be written locally in which ever subroutine is using them. I have decided to write them in this way sinceit allows for personalisation of the built in Python functions should I ever want to do it, as well as making it easier for potential 'other-language' developers to port it over (it is clearer to them that a subroutine must be written for these functions).
+
+ADD TESTING LATER.
+
+
+#### FormatInputSQL
+
+Now we have a function that can assign the primary key to an entry in the Flashcard table, it is a good time to write the subroutine that can format the users previous inputs into SQL. This will be done by taking the user inputs and concanetenating them with other, pre-defined strings to create a SQL transaction in the correct format. 
+
+Since the subroutine must be compatible with both addition flow types (as defined by the users set up in the configuration file), the subroutine's return must not be based on which flow type is being used, but a general method that works for both. 
+Because of this ensured compatibility, I will also place the cursor.execute statement in this subroutine; this means that FormatInputSQL will be the last step for the flashcard data before it is commited to the database. Note, however, that the actuall *commit* statement will only be executed in the FormatInputSQL subroutine **if** the flow type is non-queue. If the queue is being used, the commitstatement will be placed in the DeQueue function, after FormatInputSQL has been called on all the queue elements.
+
+
+
+
+```python
+
+
+``` 
