@@ -13,8 +13,8 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
 
     def __init__(self, database, setID):
         self.queueFlowType = None
-        con = sql.connect(database)
-        self.cur = con.cursor()
+        self.con = sql.connect(database)
+        self.cur = self.con.cursor()
         self.setID = setID
 
     def ConfigCheck(self):
@@ -63,12 +63,25 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
                                 WHERE setID = ?;""", (self.setID,)) #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package.
         cardID = res.fetchall() #fetches result of SQL transaction
         cardID = cardID[0][0]
-        print(cardID)
+        
+        if cardID is None:
+            cardID = 0
+
+        return cardID
 
 
-    def FormatInputSQL(self):
+    def FormatInputSQL(self, front=None, back=None):
+        if front == None:      #This set of statements is to use the obejct variables if required.
+            front = self.inputsList[0] #It is unlikely one would be None and the other not, but I still include the check for robustness.
+        if back == None:
+            back = self.inputsList[1]
+
+        self.cur.execute("""
+                    INSERT INTO Flashcards(cardID, front, back, significance, setID)
+                    VALUES (?, ?, ?, 10, ?);""", (self.CardPointer()+1, front, back, self.setID))
         
-        
+        if self.queueFlowType == False:
+            self.con.commit()
 
 class RmFlashcards: #class specifically for functions for removing flashcards.
     

@@ -665,10 +665,142 @@ Now we have a function that can assign the primary key to an entry in the Flashc
 Since the subroutine must be compatible with both addition flow types (as defined by the users set up in the configuration file), the subroutine's return must not be based on which flow type is being used, but a general method that works for both. 
 Because of this ensured compatibility, I will also place the cursor.execute statement in this subroutine; this means that FormatInputSQL will be the last step for the flashcard data before it is commited to the database. Note, however, that the actuall *commit* statement will only be executed in the FormatInputSQL subroutine **if** the flow type is non-queue. If the queue is being used, the commitstatement will be placed in the DeQueue function, after FormatInputSQL has been called on all the queue elements.
 
-
+I write out the statement as follows:
 
 
 ```python
+#from FlashcardFunctions.py, AddFlashcard class
 
-
+    def FormatInputSQL(self):
+        cur.execute("""
+                    INSERT INTO Flashcards(cardID, front, back, significance, setID)
+                    VALUES (?, ?, ?, 10, ?);""", (self.CardPointer()+1, self.front, self.back, self.setID))
 ``` 
+
+Before this can work a change must be made to the code; the CardPointer function is edited to return the current highest cardID rather than print it, e.g.:
+```python
+return cardID
+```
+This allows the code to call upon the function as used in the SQL statement above. 
+
+I realise at this point that the use of object oriented variable here (e.g. self.inputsList[0] can be thought of as self.front etc.) become redundant when the queue flow type is being used. It would be necessary, as the code is currently written, to redefine self.front and self.back every time a new flashcard data array was popped from the queue. To counter this, I use Python's ability to set default parameters. This means when the queue data type is not being used, the object variables can be used in a simple flow from input to SQL commit, but when the queue is being used we do not need to redefine these variables every time:
+
+```python
+#from FlashcardFunctions.py, AddFlashcard class
+
+    def FormatInputSQL(self, front=self.inputsList[0], back=self.inputsList[1]):
+        self.cur.execute("""
+                    INSERT INTO Flashcards(cardID, front, back, significance, setID)
+                    VALUES (?, ?, ?, 10, ?);""", (self.CardPointer()+1, front, back, self.setID))
+```
+
+To test this I first changed TestingEnvironment to the following:
+```python
+import FlashcardFunctions as Ff
+
+Adder = Ff.AddFlashcards("databases/Flashcards.db", '1') #to create AddFlashcard 'Adder' object
+
+#print(Adder.ConfigCheck())
+
+#Adder.GetInput()
+
+Adder.GetInput()
+
+Adder.FormatInputSQL()
+```
+
+This aims to add to the database in a fashion that resembles the linear, non-queue flow type. When ran, however, it gives the following output:
+
+![FormatInputFail1](pictures/FormatInputFail1.png)
+
+NOTE NEED TO REMAKE THIS FAIL. WARNING WARNING WARNING!!!!!!!!!!!
+
+After some research, I remember this is failing due to how python evaluates default arguments (at definition not during run time). To combat this I change the value of the default arguments to None and then use a selection statement to achieve the desired effect:
+
+```python
+#from FlashcardFunctions.py, AddFlashcard class
+
+    def FormatInputSQL(self, front=None, back=None):
+        if front == None:      #This set of statements is to use the obejct variables if required.
+            front = self.inputsList[0] #It is unlikely one would be None and the other not, but I still include the check for robustness.
+        if back == None:
+            back = self.inputsList[1]
+
+        self.cur.execute("""
+                    INSERT INTO Flashcards(cardID, front, back, significance, setID)
+                    VALUES (?, ?, ?, 10, ?);""", (self.CardPointer()+1, front, back, self.setID))"""
+```
+
+This code now doesn't throw up any errors when TestingEnvironment.py is run, however since their is no commit statement, we cannot checkit is being added correctly.
+
+Since I only want the commital of the transactions to be done here if the user is not using the queue flow type, I will add a statement to check for this. The final iteration, at this stage, of the code is as follows:
+
+```python
+#from FlashcardFunctions.py, AddFlashcard class
+
+    def FormatInputSQL(self, front=None, back=None):
+        if front == None:      #This set of statements is to use the obejct variables if required.
+            front = self.inputsList[0] #It is unlikely one would be None and the other not, but I still include the check for robustness.
+        if back == None:
+            back = self.inputsList[1]
+
+        self.cur.execute("""
+                    INSERT INTO Flashcards(cardID, front, back, significance, setID)
+                    VALUES (?, ?, ?, 10, ?);""", (self.CardPointer()+1, front, back, self.setID))
+        
+        if self.queueFlowType == False:
+            self.con.commit()
+```
+Before I test this, I will clear the flashcards already in the database:
+
+![FlashcardsTotalRemove](pictures/FlashcardsTotalRemove.png)
+
+I also change the config file to set queueFlowType to False and rewrite the testing script to prompt the user to input three flashcards. Note that the initial confidence is actually having no effect at the moment, it is simply to give the user the impression that it is being used. It has no use until it is reinputted at review time (although later versions of the software may use it should the sorting algorithm be updated). 
+
+```python
+#from TestingEnvironment.py
+
+import FlashcardFunctions as Ff
+
+Adder = Ff.AddFlashcards("databases/Flashcards.db", '1') #to create AddFlashcard 'Adder' object
+
+Adder.ConfigCheck()
+
+for i in range(0,3):
+    Adder.GetInput()
+    Adder.FormatInputSQL()
+    i += 1
+```
+
+However, an error arose when trying to run this:
+
+![PrelimRunFail1](pictures/PrelimRunFail1.png)
+
+Upon seeing this I realise that this is because when there is no flashcard already in the database, the return of the CardPointer will be null since there is no maximum cardID. This is an easy fix however, and so I implement a check in the CardPointer function to account for this:
+
+```python
+### from FlashcardFunctions.py, AddFlashcard class, CardPointer subroutine
+
+    def CardPointer(self):
+        res = self.cur.execute(""" 
+                                SELECT MAX(CardID)
+                                FROM Flashcards
+                                WHERE setID = ?;""", (self.setID,)) #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package.
+        cardID = res.fetchall() #fetches result of SQL transaction
+        cardID = cardID[0][0]
+        
+        if cardID is None:
+            cardID = 1
+
+        return cardID
+```
+
+This removes the error when the testing script is run, and so the interaction during run time looks like so:
+
+![PrelimRunWorks1](pictures/PrelimRunWorks1.png)
+
+Checking this has worked using the SQLite interface:
+
+![PrelimRunOutput1](pictures/PrelimRunOutput1.png)
+
+We can see this has mostly been a success (the cardID is incrementing and everything has been formatted as desired). However, notice that the cardID starts at 2 rather than 1, which is just an error due to me forgetting that the FormatInputSQL subroutine adds one to the cardID. To fix this I change the value of CardID to 0 in the CardPointer subroutine when it is the first flashcard being added to a cardset.
