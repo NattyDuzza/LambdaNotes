@@ -26,6 +26,7 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
         #the following selection statements compare the value isolated from the file and returns a suitable boolean value.
         if config == "true": 
             self.queueFlowType = True
+            self.queue = General.NewQueue()
         elif config == "false":
             self.queueFlowType = False
         else:

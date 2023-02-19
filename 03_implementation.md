@@ -371,6 +371,46 @@ This produces the same outputs as before when using a slightly modified version 
 
 For now, I am happy that CheckConfig() works as intended and will continue to work when used by other subroutines.
 
+##### Updates to CongifCheck
+
+At the point of writing this, I have now implemented the NewQueue and DeQueue features, see 3.1.3.4. This calls for the ConfigCheck subroutine to be changed slightly. This subroutine is a good place to make the queue that will be needed. This leaves the subroutine as follows:
+
+```python
+#from FlashcardFunctions, AddFlashcard class
+
+    def ConfigCheck(self):
+        file = open("config.txt", "r")
+        config = file.readlines()[4] #reads line 4, which is where flashcard-queue is defined to be.
+        config = config[20:-1] #cuts out the unecessary information, to single out the only important piece of information (true or false)
+        file.close()
+
+        #the following selection statements compare the value isolated from the file and returns a suitable boolean value.
+        if config == "true": 
+            self.queueFlowType = True
+            self.queue = general.NewQueue()
+        elif config == "false":
+            self.queueFlowType = False
+        else:
+            print("ERROR: CONFIGURATION FILE - WRONG FORMAT")
+            quit() #since correct config format is a precondition of the subroutine, no handling is done if the data read does not go to plan. The program simply puts an error message in the console and quits.
+        
+        return self.queueFlowType #returns variable in classical way; may not be needed but I believe it is good to have the option to use it this way.
+```
+Running the TestingEnvironment script with the following content:
+
+```python
+import FlashcardFunctions as Ff
+
+Adder = Ff.AddFlashcards("databases/Flashcards.db", '1') #to create AddFlashcard 'Adder' object
+
+Adder.ConfigCheck()
+
+Ff.General.EnQueue(Adder.queue, "Test")
+print(Adder.queue)
+```
+Results in an error when the configuration file is set to make the program not use a queue, which is expected. However, when the configuration file is set to use the queue, the output is as follows:
+
+![ConfigCheckMakeQueueTest1](pictures/ConfigCheckMakeQueueTest1.png)
 
 #### GetInput
 
@@ -633,6 +673,26 @@ Now the max cardID in the specified Cardset is 2, and is correctly outputted whe
 
 At this point, I am happy the code is doing what it is expected to, and I can continue on to implement the next subroutine.
 
+##### Updates to CardPointer
+
+As disucssed in 3.1.3.5, the default value of the cardID must be 0. Hence the code becomes the following:
+
+```python
+#from FlashcardFunctions.py, AddFlashcard class
+
+    def CardPointer(self):
+        res = self.cur.execute(""" 
+                                SELECT MAX(CardID)
+                                FROM Flashcards
+                                WHERE setID = ?;""", (self.setID,)) #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package.
+        cardID = res.fetchall() #fetches result of SQL transaction
+        cardID = cardID[0][0]
+        
+        if cardID is None:
+            cardID = 0
+
+        return cardID
+```
 #### NewQueue + EnQueue
 
 NewQueue is a very simple subroutine. All it must do is creat an empty list/queue that can be subsequently appened to if necessary. 
@@ -803,4 +863,4 @@ Checking this has worked using the SQLite interface:
 
 ![PrelimRunOutput1](pictures/PrelimRunOutput1.png)
 
-We can see this has mostly been a success (the cardID is incrementing and everything has been formatted as desired). However, notice that the cardID starts at 2 rather than 1, which is just an error due to me forgetting that the FormatInputSQL subroutine adds one to the cardID. To fix this I change the value of CardID to 0 in the CardPointer subroutine when it is the first flashcard being added to a cardset.
+We can see this has mostly been a success (the cardID is incrementing and everything has been formatted as desired). However, notice that the cardID starts at 2 rather than 1, which is just an error due to me forgetting that the FormatInputSQL subroutine adds one to the cardID. To fix this I change the value of CardID to 0 in the CardPointer subroutine when it is the first flashcard being added to a cardset. For this edit, please see section 3.1.3.3 .

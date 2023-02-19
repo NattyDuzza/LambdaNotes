@@ -4,7 +4,10 @@ Adder = Ff.AddFlashcards("databases/Flashcards.db", '1') #to create AddFlashcard
 
 Adder.ConfigCheck()
 
-for i in range(0,3):
-    Adder.GetInput()
-    Adder.FormatInputSQL()
-    i += 1
+Ff.General.EnQueue(Adder.queue, "Test")
+print(Adder.queue)
+
+#for i in range(0,3):
+#    Adder.GetInput()
+#    Adder.FormatInputSQL()
+#    i += 1
