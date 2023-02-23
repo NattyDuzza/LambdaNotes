@@ -123,3 +123,6 @@ class MainRemovalWin(tk.Tk):
         
 MainRemovalWin([1, 2, 3, 4, 5]).mainloop()
 ```
+Which gives the window the appearance as the following:
+
+![MainRemovalWin1](pictures/MainRemovalWin1.png)
