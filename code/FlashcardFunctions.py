@@ -58,6 +58,7 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
         self.inputsList = [front, back, conf] #adds the three inputs into a list.
 
     def CardPointer(self):
+
         res = self.cur.execute(""" 
                                 SELECT MAX(CardID)
                                 FROM Flashcards

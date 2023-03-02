@@ -126,3 +126,252 @@ MainRemovalWin([1, 2, 3, 4, 5]).mainloop()
 Which gives the window the appearance as the following:
 
 ![MainRemovalWin1](pictures/MainRemovalWin1.png)
+
+Now I have this issue sorted, I start to add and layout the other elements of the UI. The following picture shows a collection of states the visual output took as I periodically ran the code, tested the output (the layout etc) and then returned to the code to update and refactor it.
+
+![MainRemovalWinMontage1](pictures/MainRemovalWinMontage1.png)
+
+![MainRemovalWinMontage2](pictures/MainRemovalWinMontage2.png)
+
+The final window at this point looks like the following:
+
+![MainRemovalWinState1](pictures/MainRemovalWinState1.png)
+
+With the code for this being:
+
+```python
+#from PrelimUI.py
+
+import tkinter as tk
+from tkinter import ttk
+
+class TestingWindow(tk.Tk):
+    def __init__(self):
+        super().__init__()
+
+        self.title("Testing")
+
+        self.label = tk.Label(self, text="Testing")
+        self.label.pack()
+
+class MainRemovalWin(tk.Tk):
+    def __init__(self, flashcards):
+        super().__init__() #initialises tk class which has been inherited
+        self.multiPick = False
+
+        #window configuration
+        self.title('LambdaNotes - Remove Flashcard')
+        self.geometry('400x400')
+
+        #----------------------------------------------------
+
+        #frames
+        self.topBarFrame = tk.Frame(self)
+        self.rightFrame = tk.Frame(self)
+        self.leftFrame = tk.Frame(self)
+        self.multiPickFrame = tk.Frame(self.rightFrame)
+
+        self.topBarFrame.grid(row=0, column=0, sticky=tk.NSEW)
+        self.rightFrame.grid(row=1, column=1, sticky=tk.NSEW)
+        self.leftFrame.grid(row=1, column=0, sticky=tk.NSEW)
+        self.multiPickFrame.grid(row=0, column=0, sticky=tk.NSEW)
+
+        #-------------------------------------------------------------------------------------
+        
+        #elements
+
+        backButton = tk.Button(self.topBarFrame, text="Back", command = self.backButton)
+        backButton.grid(row=0, column=0, padx=(2,2), pady=(2,10), sticky=tk.W)
+
+        flashcardList = tk.Listbox(self.leftFrame)
+        flashcardList.grid(row=1, column=0, padx=(20,0), pady=20)
+
+        flashcardListScroll = ttk.Scrollbar(self.leftFrame, orient='vertical')
+        flashcardListScroll.grid(row=1, column=1,padx=(0,20), pady=20, sticky=tk.NS)
+
+        multiPickLabel = tk.Label(self.multiPickFrame, text="Mutlipick:")
+        multiPickLabel.grid(row=0, column=0, pady=(20, 5), sticky=tk.E)
+
+        multiPickCheck = tk.Checkbutton(self.multiPickFrame, variable=self.multiPick)
+        multiPickCheck.grid(row=0, column=1, pady=(20, 5), sticky=tk.W)
+
+        removeFlashcardBtn = tk.Button(self.rightFrame, text="Remove Flashcard(s)", command=self.removeFlashcard)
+        removeFlashcardBtn.grid(row=2, column=0, pady=(7,0))
+
+        changeCardsetBtn = tk.Button(self.rightFrame, text="Charge Cardset", command=self.changeCardset)
+        changeCardsetBtn.grid(row=3, column=0, pady=(7,0))
+
+        #------------------------------------------------------------------------------------------------------------------
+
+#        for i in range(0, len(flashcards)):
+ #           flashcardList.insert(tk.END, flashcards[i])
+        for i in range(0, 1000):
+            flashcardList.insert(tk.END, i)
+
+    def backButton(self):
+       pass
+
+    def removeFlashcard(self):
+        pass
+
+    def changeCardset(self):
+        pass
+
+  
+
+MainRemovalWin([1, 2, 3, 4, 5]).mainloop()
+```
+
+### UI backend
+
+#### Listing Flashcards in the Scroll-list
+
+I am creating a file. The original code was written as the following:
+
+```python
+#from UIbackend.py
+
+import FlashcardFunctions as Ff
+import sqlite3 as sql
+
+#database connection
+database = "databases/Flashcards.db"
+con = sql.connect(database)
+cur = con.cursor()
+
+#subroutines
+def FlashcardList(setID):
+    li = []
+    maxID = Ff.AddFlashcards.CardPointer(setID)
+    
+    for i in range(0, maxID):
+        try:
+            res = cur.execute("""
+                                SELECT front
+                                FROM Flashcards
+                                WHERE setID = ? AND
+                                WHERE cardID = ?;""", (setID, i))
+            flashcard = (cur.fetchall())[0][0]
+            li.append(flashcard)
+
+        except sql.Error:
+            pass
+
+    return li
+
+print(FlashcardList(1))
+```
+
+However this gave multiple errors as can be seen here:
+
+![UIbackendErr1](pictures/UIbackendErr1.png)
+
+To fix this code I changed the code to instantiate an adder object (as seen previously in TestingEnvironment.py). It is worth noting that the use of this instantiates the AddFlashcard class in FlashcardFunctions.py seems clunky since we are *removing* flashcards. It is something I would like to refactor at a later date, probably moving the CardPointer function to the General class.
+
+The code changes look as such:
+
+```python
+#from UIbackend.py
+
+def FlashcardList(setID):
+    li = []
+    
+    adder = Ff.AddFlashcards(database, setID)
+    maxID = adder.CardPointer()
+
+    print(maxID)
+    
+    for i in range(0, maxID+1):
+        try:
+            res = cur.execute("""
+                                SELECT front
+                                FROM Flashcards
+                                WHERE setID = ? AND
+                                WHERE cardID = ?;""", (setID, i))
+            flashcard = (cur.fetchall())[0][0]
+            li.append(flashcard)
+
+        except sql.Error:
+            pass
+
+    return li
+```
+However this results in the following output:
+
+OUTPUTS ONLY
+```
+4
+[]
+```
+fake later
+
+I replaced the pass command with a print("Error") which, when the code was run, prints out 5 errors. 
+
+Using the SQLite3 interface, I tested what was wrong with the SQL statement:
+
+![SQLiteErrTest.png](pictures/SQLiteErrTest.png)
+
+And it became clear that it was due to using WHERE twice. Changing this removes the error from before, however a new error occured. 
+This was due to the fact that when the value of *i* is a number that refers to a cardID that is not present in the databse. 
+
+Below you can see my workflow (use of print statements to test what is being triggered and when):
+
+![UIbackendWorkflow1](pictures/UIbackendWorkflow1.png)
+
+And this is the state of the code after this:
+
+```python
+#from UIbackend.py
+
+def FlashcardList(setID):
+    li = []
+    
+    adder = Ff.AddFlashcards(database, setID)
+    maxID = adder.CardPointer()
+
+    for i in range(0, maxID+1):
+        try:
+            res = cur.execute("""
+                                SELECT front
+                                FROM Flashcards
+                                WHERE setID = ? AND
+                                cardID = ?;""", (setID, i))
+            flashcard = res.fetchall()
+            
+            if len(flashcard) == 0:
+                pass
+            else:
+                li.append(flashcard[0][0])
+
+        except sql.Error:
+            print("Error")
+
+    return li
+```
+
+I will now import this function to PrelimUI.py, and make use of it to present the user with the flashcards in the scroll list.
+
+The import statement in PrelimUI.py is as follows:
+```python
+import UIbackend as UI
+```
+
+With the iterative statement to add the contents to the scroll-list as follows:
+```python
+#from PrelimUI.py
+
+        scrollListContent = UI.FlashcardList(1)
+
+        for i in range(0, len(scrollListContent)):
+            flashcardList.insert(tk.END, scrollListContent[i])
+```
+
+This works as expected and results in the following output:
+
+![MainRemovalWin2](pictures/MainRemovalWin2.png)
+
+#### Using Scroll-list
+
+As discussed in the Design segment, I will route UI requests for SQL-related transactions through the FlashcardFunctions.py file and higher-level functional requests through UIbackend.py. 
+
+The scrollbar requires both, but to start this section I want to first add a subroutine into UIbackend.py that retrieves which selection the user makes.
