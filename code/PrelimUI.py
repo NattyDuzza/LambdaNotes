@@ -2,6 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 import UIbackend as UI
 
+database = "databases/Flashcards.db"
+setID = 1 #needs to be changeable
+
 class TestingWindow(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -14,7 +17,7 @@ class TestingWindow(tk.Tk):
 class MainRemovalWin(tk.Tk):
     def __init__(self, flashcards):
         super().__init__() #initialises tk class which has been inherited
-        self.multiPick = 0
+        self.multiPick = tk.IntVar(self)
 
         #window configuration
         self.title('LambdaNotes - Remove Flashcard')
@@ -49,7 +52,6 @@ class MainRemovalWin(tk.Tk):
         self.flashcardList.config(yscrollcommand = flashcardListScroll.set)
         flashcardListScroll.config(command = self.flashcardList.yview)
         
-
         multiPickLabel = tk.Label(self.multiPickFrame, text="Mutlipick:")
         multiPickLabel.grid(row=0, column=0, pady=(20, 5), sticky=tk.E)
 
@@ -64,28 +66,39 @@ class MainRemovalWin(tk.Tk):
 
         #------------------------------------------------------------------------------------------------------------------
 
-#        for i in range(0, len(flashcards)):
- #           flashcardList.insert(tk.END, flashcards[i])
-        scrollListContent = UI.FlashcardList(1)
+        #prelim subroutines
+        self.updateList()
 
-        for i in range(0, len(scrollListContent)):
-            self.flashcardList.insert(tk.END, scrollListContent[i])
+        
+        
+    def updateList(self):   
+        self.flashcardList.delete(0, tk.END)
+        self.scrollListContent = UI.FlashcardList(setID)
+        for i in range(0, len(self.scrollListContent)):
+            self.flashcardList.insert(tk.END, self.scrollListContent[i])
 
     def backButton(self):
        pass
 
     def removeFlashcard(self):
-        pass
+        rmList = []
+        selectedCards = self.flashcardList.curselection()
+        for i in range(0, len(selectedCards)):
+            print(self.scrollListContent[selectedCards[i]])
+            ID = list(self.scrollListContent[selectedCards[i]].values())[0]
+            rmList.append(ID)
+        UI.RemoveFlashcards(setID, rmList)
+        print("check")
+        self.updateList()
 
     def changeCardset(self):
         pass
 
-    def multiPickCheck(self):
-        print(self.multiPick)
-        if self.multiPick == 0:
+    def multiPickCheck(self):    #function determines whether the user has decided to choose multiple flashcards at once and changes the select mode accordingly.
+        if self.multiPick.get() == 0:
             self.flashcardList.config(selectmode=tk.SINGLE)
             print(self.multiPick)
-        if self.multiPick == 1:
+        if self.multiPick.get() == 1:
             self.flashcardList.config(selectmode=tk.MULTIPLE)
             print(self.multiPick)
 

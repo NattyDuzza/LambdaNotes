@@ -3,11 +3,13 @@ import sqlite3 as sql
 
 #database connection
 database = "databases/Flashcards.db"
-con = sql.connect(database)
-cur = con.cursor()
 
 #subroutines
 def FlashcardList(setID):
+
+    con = sql.connect(database)
+    cur = con.cursor()
+
     li = []
     
     adder = Ff.AddFlashcards(database, setID)
@@ -21,13 +23,19 @@ def FlashcardList(setID):
                                 WHERE setID = ? AND
                                 cardID = ?;""", (setID, i))
             flashcard = res.fetchall()
+
             
             if len(flashcard) == 0:
                 pass
             else:
-                li.append(flashcard[0][0])
+                flashcard = {flashcard[0][0]:i}
+                li.append(flashcard)
 
         except sql.Error:
             print("Error")
 
     return li
+
+def RemoveFlashcards(setID, rmList):
+    remover = Ff.RmFlashcards(database, setID)
+    remover.Remove(rmList)

@@ -87,9 +87,24 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
 
 class RmFlashcards: #class specifically for functions for removing flashcards.
     
+    def __init__(self, database, setID):
+        self.con = sql.connect(database)
+        self.cur = self.con.cursor()
+        self.setID = setID
 
-    def Null():
-        pass
+    def Remove(self, rmList):
+        print("called")
+        
+        for i in range(0, len(rmList)):
+            print(rmList[i])
+            self.cur.execute(
+                """
+                DELETE FROM Flashcards
+                WHERE setID=? AND cardID=?;
+                """, (self.setID, rmList[i])
+            )
+            self.con.commit()
+
 
 class AddDeck: #class specifically for functions for adding a deck.
     

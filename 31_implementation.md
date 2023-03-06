@@ -370,8 +370,177 @@ This works as expected and results in the following output:
 
 ![MainRemovalWin2](pictures/MainRemovalWin2.png)
 
-#### Using Scroll-list
+#### Using Scroll-list:
 
-As discussed in the Design segment, I will route UI requests for SQL-related transactions through the FlashcardFunctions.py file and higher-level functional requests through UIbackend.py. 
+As discussed in the Design segment, I will route UI requests for SQL-related transactions through the FlashcardFunctions.py file and higher-level functional requests through UIbackend.py as well as some processes natively in the PrelimUI file.
 
-The scrollbar requires both, but to start this section I want to first add a subroutine into UIbackend.py that retrieves which selection the user makes.
+The scroll-list must make use of the its ability to have different types of selection modes to use the multi-select checkbox. This is the functionality I want to add first.
+
+This functionality will reside in the highest level file, PrelimUI.py. I change/add the following relevant lines:
+
+```python
+
+        self.multiPick = tk.IntVar(self)
+
+------------------------------------------------------------ lines cut out
+
+        self.flashcardList = tk.Listbox(self.leftFrame, selectmode=tk.SINGLE)
+        self.flashcardList.grid(row=1, column=0, padx=(20,0), pady=20)
+
+------------------------------------------------------------ lines cut out
+
+        self.multiPickCheck = tk.Checkbutton(self.multiPickFrame, variable=self.multiPick, command=self.multiPickCheck)
+        self.multiPickCheck.grid(row=0, column=1, pady=(20, 5), sticky=tk.W)
+
+------------------------------------------------------------ lines cut out
+
+    def multiPickCheck(self):    #function determines whether the user has decided to choose multiple flashcards at once and changes the select mode accordingly.
+        if self.multiPick.get() == 0:
+            self.flashcardList.config(selectmode=tk.SINGLE)
+            print(self.multiPick)
+        if self.multiPick.get() == 1:
+            self.flashcardList.config(selectmode=tk.MULTIPLE)
+            print(self.multiPick)
+```
+
+#### Removing Flashcards
+
+Now it is time to deal with the set of actions that lead to an SQL transaction to actually remove the flashcards.
+
+In PrelimUI.py I try retrieving the selected options:
+
+```python
+#from PrelimUI.py
+
+    def removeFlashcard(self):
+        selectedCards = self.flashcardList.curselection()
+        print(selectedCards)
+```
+
+However when I select a card from the list and click the 'Remove Flashcard' button I get the following output:
+
+![RemoveFlashcardFail1](pictures/RemoveFlashcardFail1.png)
+
+This is to be expected at this stage however, at this point, I realised the way UIbackend was passing the flashcard information to PrelimUI would make the deletion of the flashcards chosen very unelegant. 
+
+To sort this I changed the way the flashcard information was passed to PrelimUI from just the front of the card to the front and ID of the card:
+
+```python
+#from UIbackend.py
+
+            if len(flashcard) == 0:
+                pass
+            else:
+                flashcard = {flashcard[0][0]:i}
+                li.append(flashcard)
+
+```
+
+This does now output to the user the front and the id in a dictionary form, however I will change this at a later date.
+
+As the following screenshot of my workflow shows, it took some trying to isolate the chosen flashcard ID into a useable form, but it worked in the end:
+
+![RemoverFlashcardWorkingOut1](pictures/RemoveFlashcardWorkingOut1.png)
+
+The relevant function in PrelimUI.py is as such:
+
+```python
+#from PrelimUI.py
+
+    def removeFlashcard(self):
+        selectedCards = self.flashcardList.curselection()
+        for i in range(0, len(selectedCards)):
+            print(self.scrollListContent[selectedCards[i]])
+            ID = list(self.scrollListContent[selectedCards[i]].values())
+            print(ID)
+```
+
+I will now route this through UIbackend.py to FlashcardFunctions.py. I am doing this layering to future proof the development.
+
+```python
+#from FlashcardFunctions.py
+
+class RmFlashcards: #class specifically for functions for removing flashcards.
+    
+    def __init__(self, database, setID):
+        self.con = sql.connect(database)
+        self.cur = self.con.cursor()
+        self.setID = setID
+
+    def Remove(self, rmList):
+        for i in range(0, len(rmList)):
+            self.cur.execute(
+                """
+                DELETE FROM Flashcards
+                WHERE setID=? AND cardID=?;
+                """, (self.setID, rmList[i])
+            )
+```
+
+Put into function for repeated updates, and called in __init__:
+```python
+def updateList(self):   
+        self.scrollListContent = UI.FlashcardList(setID)
+        for i in range(0, len(self.scrollListContent)):
+            self.flashcardList.insert(tk.END, self.scrollListContent[i])
+```
+
+I ran the code and tried deleting all the flashcards, but it did not visually show this had happened, however when I rebooted the program it showed it to be empty. I will add three flashcards back in and work to fix this.
+
+![RmFlashcardWorkStep1](pictures/RmFlashcardWorkStep1.png)
+
+You can see above that there are once again three flashcards.
+
+I soon realise that the problem is a disparity between database connections. Although there is a more elegant way to combat this, using context managers and the like, for now I will simply re-start the connection when UI.FlashcardList is called:
+
+```python
+def FlashcardList(setID):
+
+    con = sql.connect(database)
+    cur = con.cursor()
+
+    li = []
+    
+    adder = Ff.AddFlashcards(database, setID)
+    maxID = adder.CardPointer()
+
+    for i in range(0, maxID+1):
+        try:
+            res = cur.execute("""
+                                SELECT front
+                                FROM Flashcards
+                                WHERE setID = ? AND
+                                cardID = ?;""", (setID, i))
+            flashcard = res.fetchall()
+
+            
+            if len(flashcard) == 0:
+                pass
+            else:
+                flashcard = {flashcard[0][0]:i}
+                li.append(flashcard)
+
+        except sql.Error:
+            print("Error")
+
+    return li
+```
+
+![RmFlashcardPick1](pictures/RmFlashcardPick1.png)
+
+![RmFlashcardUpdateFail1](pictures/RmFlashcardUpdateFail1.png)
+
+Fix:
+
+Clear list when function is run:
+
+```python
+
+def updateList(self):   
+        self.flashcardList.delete(0, tk.END)
+        self.scrollListContent = UI.FlashcardList(setID)
+        for i in range(0, len(self.scrollListContent)):
+            self.flashcardList.insert(tk.END, self.scrollListContent[i])
+```
+
+It now can be fully functionally used to choose and remove flashcards.
