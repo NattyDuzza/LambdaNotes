@@ -543,4 +543,6 @@ def updateList(self):
             self.flashcardList.insert(tk.END, self.scrollListContent[i])
 ```
 
-It now can be fully functionally used to choose and remove flashcards.
+It now can be fully functionally used to choose and remove flashcards. To see a video of this functioningm, please navigate to the video file RemoveFlashcardList.mp4.
+
+

@@ -69,8 +69,6 @@ class MainRemovalWin(tk.Tk):
         #prelim subroutines
         self.updateList()
 
-        
-        
     def updateList(self):   
         self.flashcardList.delete(0, tk.END)
         self.scrollListContent = UI.FlashcardList(setID)
