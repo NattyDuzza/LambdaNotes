@@ -57,7 +57,7 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
             
         self.inputsList = [front, back, conf] #adds the three inputs into a list.
 
-    def CardPointer(self):
+    def SetCardPointer(self):
 
         res = self.cur.execute(""" 
                                 SELECT MAX(CardID)
@@ -71,6 +71,18 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
 
         return cardID
 
+    def CardPointer(self):
+        
+        res = self.cur.execute(""" 
+                                SELECT MAX(CardID)
+                                FROM Flashcards;""") #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package.
+        cardID = res.fetchall() #fetches result of SQL transaction
+        cardID = cardID[0][0]
+        
+        if cardID is None:
+            cardID = 0
+
+        return cardID
 
     def FormatInputSQL(self, front=None, back=None):
         if front == None:      #This set of statements is to use the obejct variables if required.

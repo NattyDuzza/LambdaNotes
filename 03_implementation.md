@@ -864,3 +864,22 @@ Checking this has worked using the SQLite interface:
 ![PrelimRunOutput1](pictures/PrelimRunOutput1.png)
 
 We can see this has mostly been a success (the cardID is incrementing and everything has been formatted as desired). However, notice that the cardID starts at 2 rather than 1, which is just an error due to me forgetting that the FormatInputSQL subroutine adds one to the cardID. To fix this I change the value of CardID to 0 in the CardPointer subroutine when it is the first flashcard being added to a cardset. For this edit, please see section 3.1.3.3 .
+
+#### Logic Issue Found Later: 
+
+When implementing multiple cardsets, I got the SQL error that the UNIQUE constraint of the primary key was being violated, upon returning to look at this code it is clear to see why. Since cardID is the primary key, it cannot be the same on more than one flashcard. As the code is currently, it will try to make the first card in each cardset have the same primary key (1). To fix this, I will simply use the max cardID in the entire table, not the specific set. I leave the old code in under a new function name - SetCardPointer (for searching a specific set) but make a new function with the old name as so:
+
+```python
+def CardPointer(self):
+        
+        res = self.cur.execute(""" 
+                                SELECT MAX(CardID)
+                                FROM Flashcards;""") #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package.
+        cardID = res.fetchall() #fetches result of SQL transaction
+        cardID = cardID[0][0]
+        
+        if cardID is None:
+            cardID = 0
+
+        return cardID
+```

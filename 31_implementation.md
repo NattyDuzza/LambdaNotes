@@ -545,4 +545,104 @@ def updateList(self):
 
 It now can be fully functionally used to choose and remove flashcards. To see a video of this functioningm, please navigate to the video file RemoveFlashcardList.mp4.
 
+#### Change Cardset:
+
+![ChangeCardsetTest1](pictures/ChangeCardsetTest1.png)
+
+![ChangeCardsetVisual1](pictures/ChangeCardsetVisual1.png)
+
+Initial PrelimUI:
+```python
+class ChangeCardset(tk.Tk):
+    def __init__(self):
+        super().__init__()
+
+        #window configuration
+        self.title("LamdaNotes - Change Cardset")
+
+        #----------------------------------------------
+
+        #frames
+        self.midframe = tk.Frame(self)
+
+        self.midframe.grid(row=1, column=0)
+
+        #elements
+
+        introLabel = tk.Label(self, text="Choose Cardset:")
+        introLabel.grid(row = 0, column=0)
+
+        self.cardsetList = tk.Listbox(self.midframe, selectmode=tk.SINGLE)
+        self.cardsetList.grid(row=0, column=0, padx=(20,0), pady=20)
+
+        cardsetListScroll = ttk.Scrollbar(self.midframe, orient='vertical')
+        cardsetListScroll.grid(row=0, column=1,padx=(0,20), pady=20, sticky=tk.NS)
+
+        self.cardsetList.config(yscrollcommand = cardsetListScroll.set)
+        cardsetListScroll.config(command = self.cardsetList.yview)
+
+        chooseBtn = tk.Button(self, text="Confirm", command=self.confirmChange)
+        chooseBtn.grid(row = 2, column=0, sticky=tk.EW)
+
+        self.updateList()
+
+    def updateList(self):
+        content = UI.CardsetList()
+        for i in range(0, len(content)):
+            self.cardsetList.insert(tk.END, content[i])
+    
+    def confirmChange(self):
+        pass
+```
+Initial UIbackend.py:
+
+```python
+def CardsetList():
+
+    con = sql.connect(database)
+    cur = con.cursor()
+
+    li = []
+
+    res = cur.execute("""SELECT * FROM Cardset;""")
+
+    res = res.fetchall()
+    
+    for i in range(0, len(res)):
+        li.append(res[i][1])
+    
+    return li
+```
+
+
+Also added tracker at this point:
+
+```python
+#to create object to track variables that will be needed in different UI windows
+class Tracker:
+    def __init__(self, setID):
+        self.setID = setID
+
+--------------------------------------- (different file)
+
+track = UI.Tracker(1)
+```
+
+```python
+def changeSetID(setName):
+    con = sql.connect(database)
+    cur = con.cursor()
+
+    res = cur.execute("""SELECT setID FROM Cardset
+    WHERE setName=?;""",(setName,))
+
+    res = res.fetchall()[0][0]
+    return res
+```
+
+
+Created Cardset 2 (Physics) and 3 (Mathematics) using SQL interface, then added three flashcards to each using FlashcardFunctions.py.
+
+
+Video evidence of it working: RemoveFlashcardMultiCardset.mp4
 

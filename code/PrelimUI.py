@@ -3,7 +3,6 @@ from tkinter import ttk
 import UIbackend as UI
 
 database = "databases/Flashcards.db"
-setID = 1 #needs to be changeable
 
 class TestingWindow(tk.Tk):
     def __init__(self):
@@ -15,7 +14,7 @@ class TestingWindow(tk.Tk):
         self.label.pack()
 
 class MainRemovalWin(tk.Tk):
-    def __init__(self, flashcards):
+    def __init__(self):
         super().__init__() #initialises tk class which has been inherited
         self.multiPick = tk.IntVar(self)
 
@@ -71,7 +70,7 @@ class MainRemovalWin(tk.Tk):
 
     def updateList(self):   
         self.flashcardList.delete(0, tk.END)
-        self.scrollListContent = UI.FlashcardList(setID)
+        self.scrollListContent = UI.FlashcardList(track.setID)
         for i in range(0, len(self.scrollListContent)):
             self.flashcardList.insert(tk.END, self.scrollListContent[i])
 
@@ -85,12 +84,13 @@ class MainRemovalWin(tk.Tk):
             print(self.scrollListContent[selectedCards[i]])
             ID = list(self.scrollListContent[selectedCards[i]].values())[0]
             rmList.append(ID)
-        UI.RemoveFlashcards(setID, rmList)
+        UI.RemoveFlashcards(track.setID, rmList)
         print("check")
         self.updateList()
 
     def changeCardset(self):
-        pass
+        self.destroy()
+        ChangeCardset().mainloop()
 
     def multiPickCheck(self):    #function determines whether the user has decided to choose multiple flashcards at once and changes the select mode accordingly.
         if self.multiPick.get() == 0:
@@ -100,4 +100,52 @@ class MainRemovalWin(tk.Tk):
             self.flashcardList.config(selectmode=tk.MULTIPLE)
             print(self.multiPick)
 
-MainRemovalWin([1, 2, 3, 4, 5]).mainloop()
+class ChangeCardset(tk.Tk):
+    def __init__(self):
+        super().__init__()
+
+        #window configuration
+        self.title("LamdaNotes - Change Cardset")
+
+        #----------------------------------------------
+
+        #frames
+        self.midframe = tk.Frame(self)
+
+        self.midframe.grid(row=1, column=0)
+
+        #elements
+
+        introLabel = tk.Label(self, text="Choose Cardset:")
+        introLabel.grid(row = 0, column=0)
+
+        self.cardsetList = tk.Listbox(self.midframe, selectmode=tk.SINGLE)
+        self.cardsetList.grid(row=0, column=0, padx=(20,0), pady=20)
+
+        cardsetListScroll = ttk.Scrollbar(self.midframe, orient='vertical')
+        cardsetListScroll.grid(row=0, column=1,padx=(0,20), pady=20, sticky=tk.NS)
+
+        self.cardsetList.config(yscrollcommand = cardsetListScroll.set)
+        cardsetListScroll.config(command = self.cardsetList.yview)
+
+        chooseBtn = tk.Button(self, text="Confirm", command=self.confirmChange)
+        chooseBtn.grid(row = 2, column=0, sticky=tk.EW)
+
+        self.updateList()
+
+    def updateList(self):
+        self.content = UI.CardsetList()
+        for i in range(0, len(self.content)):
+            self.cardsetList.insert(tk.END, self.content[i])
+    
+    def confirmChange(self):
+        selectedSet = self.content[self.cardsetList.curselection()[0]]
+        track.setID = UI.changeSetID(selectedSet)
+        self.destroy()
+        MainRemovalWin().mainloop()
+        
+
+
+
+track = UI.Tracker(3)
+MainRemovalWin().mainloop()
