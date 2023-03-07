@@ -646,3 +646,90 @@ Created Cardset 2 (Physics) and 3 (Mathematics) using SQL interface, then added 
 
 Video evidence of it working: RemoveFlashcardMultiCardset.mp4
 
+
+#### Add Flashcard:
+
+Creation of UI layout:
+
+add picture of UI layout.
+
+```python
+class AddFlashcard(tk.Tk):
+    
+    def __init__(self):
+        super().__init__()
+        UI.MakeAdderObject(track.setID)
+
+        self.front = tk.StringVar(self)
+        self.back = tk.StringVar(self)
+
+
+        #window configuration
+        self.title("LamdaNotes - Add Flashcard")
+
+        #--------------------------------------------
+        
+        #frames
+
+        self.topBarFrame = tk.Frame(self)
+        self.FlashcardFrontEntryFrame = tk.Frame(self)
+        self.FlashcardBackEntryFrame = tk.Frame(self)
+        self.confBtnFrame = tk.Frame(self)
+        self.bottomBarFrame = tk.Frame(self)
+
+        self.topBarFrame.grid(row=0, column=0, sticky=tk.W, padx=15, pady=15)
+        self.FlashcardFrontEntryFrame.grid(row=2, column=0, sticky=tk.NSEW, padx=15, pady=15)
+        self.FlashcardBackEntryFrame.grid(row=3, column=0, sticky=tk.NSEW, padx=15, pady=15)
+        self.confBtnFrame.grid(row=4, column=0, sticky=tk.NSEW, padx=15, pady=15)
+        self.bottomBarFrame.grid(row=5, column=0, sticky=tk.E, padx=15, pady=15)
+        #---------------------------------------------------------------------------------------
+
+        #elements
+
+        backButton = tk.Button(self.topBarFrame, text="Back", command = self.backButton)
+        backButton.grid(row=0, column=0, padx=(2,2), pady=(2,10), sticky=tk.W)
+
+        FlashcardFrontLbl = tk.Label(self.FlashcardFrontEntryFrame, text="Flashcard Front:", font=('Arial', 17))
+        FlashcardFrontLbl.grid(row=0, column=0, sticky=tk.EW)
+
+        self.FlashcardFrontEntry = tk.Entry(self.FlashcardFrontEntryFrame, width=100, textvariable=self.front, font=('Arial', 14))
+        self.FlashcardFrontEntry.grid(row=1, column=0, sticky=tk.NSEW, ipady=30)
+
+        FlashcardBackLbl = tk.Label(self.FlashcardBackEntryFrame, text="Flashcard Back: ", font=('Arial', 17))
+        FlashcardBackLbl.grid(row=0, column=0, sticky=tk.EW)
+
+        self.FlashcardBackEntry = tk.Entry(self.FlashcardBackEntryFrame, width=100, textvariable=self.back, font=('Arial', 14))
+        self.FlashcardBackEntry.grid(row=1, column=0, sticky=tk.NSEW, ipady=30)
+
+        self.confGoodBtn = tk.Button(self.confBtnFrame, text="Good", command = lambda: self.confButton('good'))
+        self.confGoodBtn.grid(row=0, column=0, sticky=tk.NSEW, padx=15, pady=15)
+
+        self.confOkayBtn = tk.Button(self.confBtnFrame, text="Okay", command = lambda: self.confButton('okay'))
+        self.confOkayBtn.grid(row=0, column=1, sticky=tk.NSEW, padx=15, pady=15)
+
+        self.confBadBtn = tk.Button(self.confBtnFrame, text="Bad", command = lambda: self.confButton('bad'))
+        self.confBadBtn.grid(row=0, column=2, sticky=tk.NSEW, padx=15, pady=15)
+
+        self.condfirmButton = tk.Button(self.bottomBarFrame, text="Confirm and Add Flashcard", command=lambda: self.confirmAdd)
+        self.condfirmButton.grid(row=0, column=0, sticky=tk.E, padx=15, pady=15)
+
+    def confButton(self, conf):
+        self.confidence = conf
+        print(self.confidence)
+
+    def backButton(self):
+        pass
+
+    def confirmAdd(self):
+        pass
+```
+
+To grab information in entry fields and pass it to UIbackend.py:
+
+
+
+Now to change FlashcardsFunctions.py to take in different kind of input:
+
+```python
+
+```
