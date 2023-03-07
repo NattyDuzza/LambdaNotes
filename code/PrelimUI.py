@@ -190,7 +190,6 @@ class AddFlashcard(tk.Tk):
 
         #window configuration
         self.title("LamdaNotes - Add Flashcard")
-        self.geometry('750x550')
 
         #--------------------------------------------
         
@@ -200,14 +199,12 @@ class AddFlashcard(tk.Tk):
         self.FlashcardFrontEntryFrame = tk.Frame(self)
         self.FlashcardBackEntryFrame = tk.Frame(self)
         self.confBtnFrame = tk.Frame(self)
-        self.confBtnSubframe = tk.Frame(self.confBtnFrame)
         self.bottomBarFrame = tk.Frame(self)
 
         self.topBarFrame.grid(row=0, column=0, sticky=tk.W, padx=15, pady=15)
         self.FlashcardFrontEntryFrame.grid(row=2, column=0, sticky=tk.NSEW, padx=15, pady=15)
         self.FlashcardBackEntryFrame.grid(row=3, column=0, sticky=tk.NSEW, padx=15, pady=15)
-        self.confBtnFrame.grid(row=4, column=0, sticky=tk.NSEW, padx=15, pady=(15,30))
-        self.confBtnSubframe.place(relx=0.1, rely=0.1, anchor=tk.CENTER)
+        self.confBtnFrame.grid(row=4, column=0, sticky=tk.NSEW, padx=15, pady=15)
         self.bottomBarFrame.grid(row=5, column=0, sticky=tk.E, padx=15, pady=15)
         #---------------------------------------------------------------------------------------
 
@@ -219,25 +216,25 @@ class AddFlashcard(tk.Tk):
         FlashcardFrontLbl = tk.Label(self.FlashcardFrontEntryFrame, text="Flashcard Front:", font=('Arial', 17))
         FlashcardFrontLbl.grid(row=0, column=0, sticky=tk.EW)
 
-        self.FlashcardFrontEntry = tk.Entry(self.FlashcardFrontEntryFrame, width=100, textvariable=self.front)
+        self.FlashcardFrontEntry = tk.Entry(self.FlashcardFrontEntryFrame, width=100, textvariable=self.front, font=('Arial', 14))
         self.FlashcardFrontEntry.grid(row=1, column=0, sticky=tk.NSEW, ipady=30)
 
         FlashcardBackLbl = tk.Label(self.FlashcardBackEntryFrame, text="Flashcard Back: ", font=('Arial', 17))
         FlashcardBackLbl.grid(row=0, column=0, sticky=tk.EW)
 
-        self.FlashcardBackEntry = tk.Entry(self.FlashcardBackEntryFrame, width=100, textvariable=self.back)
+        self.FlashcardBackEntry = tk.Entry(self.FlashcardBackEntryFrame, width=100, textvariable=self.back, font=('Arial', 14))
         self.FlashcardBackEntry.grid(row=1, column=0, sticky=tk.NSEW, ipady=30)
 
-        self.confGoodBtn = tk.Button(self.confBtnSubframe, text="Good", command = lambda: self.confButton('good'))
+        self.confGoodBtn = tk.Button(self.confBtnFrame, text="Good", command = lambda: self.confButton('good'))
         self.confGoodBtn.grid(row=0, column=0, sticky=tk.NSEW, padx=15, pady=15)
 
-        self.confOkayBtn = tk.Button(self.confBtnSubframe, text="Okay", command = lambda: self.confButton('okay'))
+        self.confOkayBtn = tk.Button(self.confBtnFrame, text="Okay", command = lambda: self.confButton('okay'))
         self.confOkayBtn.grid(row=0, column=1, sticky=tk.NSEW, padx=15, pady=15)
 
-        self.confBadBtn = tk.Button(self.confBtnSubframe, text="Bad", command = lambda: self.confButton('bad'))
+        self.confBadBtn = tk.Button(self.confBtnFrame, text="Bad", command = lambda: self.confButton('bad'))
         self.confBadBtn.grid(row=0, column=2, sticky=tk.NSEW, padx=15, pady=15)
 
-        self.condfirmButton = tk.Button(self.bottomBarFrame, text="Confirm and Add Flashcard", command=lambda: self.confirmAdd)
+        self.condfirmButton = tk.Button(self.bottomBarFrame, text="Confirm and Add Flashcard", command=lambda: self.confirmAdd())
         self.condfirmButton.grid(row=0, column=0, sticky=tk.E, padx=15, pady=15)
 
     def confButton(self, conf):
@@ -248,7 +245,14 @@ class AddFlashcard(tk.Tk):
         pass
 
     def confirmAdd(self):
-        pass
+        front = self.front.get()
+        back = self.back.get()
+        conf = self.confidence
+        UI.AddFlashcard(track.setID, front, back, conf)
+        self.FlashcardFrontEntry.delete(0, tk.END)
+        self.FlashcardBackEntry.delete(0, tk.END)
+
+        
 
     
 
