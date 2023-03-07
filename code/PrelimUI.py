@@ -100,6 +100,7 @@ class MainRemovalWin(tk.Tk):
             self.flashcardList.config(selectmode=tk.MULTIPLE)
             print(self.multiPick)
 
+
 class ChangeCardset(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -142,10 +143,106 @@ class ChangeCardset(tk.Tk):
         selectedSet = self.content[self.cardsetList.curselection()[0]]
         track.setID = UI.changeSetID(selectedSet)
         self.destroy()
+        #frames
+        self.midframe = tk.Frame(self)
+
+        self.midframe.grid(row=1, column=0)
+
+        #elements
+
+        introLabel = tk.Label(self, text="Choose Cardset:")
+        introLabel.grid(row = 0, column=0)
+
+        self.cardsetList = tk.Listbox(self.midframe, selectmode=tk.SINGLE)
+        self.cardsetList.grid(row=0, column=0, padx=(20,0), pady=20)
+
+        cardsetListScroll = ttk.Scrollbar(self.midframe, orient='vertical')
+        cardsetListScroll.grid(row=0, column=1,padx=(0,20), pady=20, sticky=tk.NS)
+
+        self.cardsetList.config(yscrollcommand = cardsetListScroll.set)
+        cardsetListScroll.config(command = self.cardsetList.yview)
+
+        chooseBtn = tk.Button(self, text="Confirm", command=self.confirmChange)
+        chooseBtn.grid(row = 2, column=0, sticky=tk.EW)
+
+        self.updateList()
+
+    def updateList(self):
+        self.content = UI.CardsetList()
+        for i in range(0, len(self.content)):
+            self.cardsetList.insert(tk.END, self.content[i])
+    
+    def confirmChange(self):
+        selectedSet = self.content[self.cardsetList.curselection()[0]]
+        track.setID = UI.changeSetID(selectedSet)
+        self.destroy()
         MainRemovalWin().mainloop()
         
+class AddFlashcard(tk.Tk):
+    
+    def __init__(self):
+        super().__init__()
+        UI.MakeAdderObject(track.setID)
+
+        self.front = tk.StringVar(self)
+        self.back = tk.StringVar(self)
 
 
+        #window configuration
+        self.title("LamdaNotes - Add Flashcard")
 
-track = UI.Tracker(3)
-MainRemovalWin().mainloop()
+        #--------------------------------------------
+        
+        #frames
+
+        self.topBarFrame = tk.Frame(self)
+        self.FlashcardFrontEntryFrame = tk.Frame(self)
+        self.FlashcardBackEntryFrame = tk.Frame(self)
+        self.confBtnFrame = tk.Frame(self)
+
+        self.topBarFrame.grid(row=0, column=0, sticky=tk.W, padx=15, pady=15)
+        self.FlashcardFrontEntryFrame.grid(row=2, column=0, sticky=tk.NSEW, padx=15, pady=15)
+        self.FlashcardBackEntryFrame.grid(row=3, column=0, sticky=tk.NSEW, padx=15, pady=15)
+        self.confBtnFrame.grid(row=4, column=0, sticky=tk.NSEW, padx=15, pady=(15,30))
+        #---------------------------------------------------------------------------------------
+
+        #elements
+
+        backButton = tk.Button(self.topBarFrame, text="Back", command = self.backButton)
+        backButton.grid(row=0, column=0, padx=(2,2), pady=(2,10), sticky=tk.W)
+
+        FlashcardFrontLbl = tk.Label(self.FlashcardFrontEntryFrame, text="Flashcard Front:", font=('Arial', 17))
+        FlashcardFrontLbl.grid(row=0, column=0, sticky=tk.EW)
+
+        self.FlashcardFrontEntry = tk.Entry(self.FlashcardFrontEntryFrame, width=100, textvariable=self.front)
+        self.FlashcardFrontEntry.grid(row=1, column=0, sticky=tk.NSEW, ipady=30)
+
+        FlashcardBackLbl = tk.Label(self.FlashcardBackEntryFrame, text="Flashcard Back: ", font=('Arial', 17))
+        FlashcardBackLbl.grid(row=0, column=0, sticky=tk.EW)
+
+        self.FlashcardBackEntry = tk.Entry(self.FlashcardBackEntryFrame, width=100, textvariable=self.back)
+        self.FlashcardBackEntry.grid(row=1, column=0, sticky=tk.NSEW, ipady=30)
+
+        self.confGoodBtn = tk.Button(self.confBtnFrame, text="Good", command = lambda: self.confButton('good'))
+        self.confGoodBtn.grid(row=0, column=0, sticky=tk.NSEW)
+
+        self.confOkayBtn = tk.Button(self.confBtnFrame, text="Okay", command = lambda: self.confButton('okay'))
+        self.confOkayBtn.grid(row=0, column=1, sticky=tk.NSEW)
+
+        self.confBadBtn = tk.Button(self.confBtnFrame, text="Bad", command = lambda: self.confButton('bad'))
+        self.confBadBtn.grid(row=0, column=2, sticky=tk.NSEW)
+
+    def confButton(self, conf):
+        self.confidence = conf
+        print(self.confidence)
+
+    def backButton(self):
+        pass
+
+
+    
+
+
+track = UI.Tracker(1)
+#MainRemovalWin().mainloop()
+AddFlashcard().mainloop()

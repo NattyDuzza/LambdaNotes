@@ -70,3 +70,7 @@ def changeSetID(setName):
 def RemoveFlashcards(setID, rmList):
     remover = Ff.RmFlashcards(database, setID)
     remover.Remove(rmList)
+
+def MakeAdderObject(setID):
+    adder = Ff.AddFlashcards(database, setID)
+    return adder
