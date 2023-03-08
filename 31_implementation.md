@@ -726,10 +726,79 @@ class AddFlashcard(tk.Tk):
 
 To grab information in entry fields and pass it to UIbackend.py:
 
+```python
+def confirmAdd(self):
+        front = self.front.get()
+        back = self.back.get()
+        conf = self.confidence
+        UI.AddFlashcard(track.setID, front, back, conf)
+        self.FlashcardFrontEntry.delete(0, tk.END)
+        self.FlashcardBackEntry.delete(0, tk.END)
+```
 
+```python
+def AddFlashcard(setID, front, back, confidence):
+    instance = MakeAdderObject(setID)
+    instance.ConfigCheck()
+    instance.GetInput(front, back, confidence)
+    instance.FormatInputSQL()
+```
 
 Now to change FlashcardsFunctions.py to take in different kind of input:
 
 ```python
-
+def GetInput(self, inpFront, inpBack, inpConf): #will need to be updated when packaged into a GUI.
+        valid = True #used to check input is valid
+        front = inpFront
+        back = inpBack
+        conf = inpConf
+        validConf = ['good', 'okay', 'bad'] #set of valid confidences, in list form for possibility of extra options in the future.
 ```
+
+Working:
+
+
+
+Other changes made:
+- extra variable to track previous window (will be used for back buttons etc)
+- 
+
+Adding Menu:
+
+```python
+class Menu(tk.Tk):
+    
+    def __init__(self):
+        super().__init__()
+
+        #window configuration
+        self.title('LambdaNotes - Main Menu')
+
+        #-------------------------------------------
+
+        #elements
+
+        AddFlashcardBtn = tk.Button(self, text="Add Flashcards", command=self.AddFlashcard, font=('Arial', 15))
+        AddFlashcardBtn.grid(row=0, column=0, padx=10, pady=10, sticky=tk.NSEW)
+
+        RmFlashcardBtn = tk.Button(self, text="Remove Flashcards", command=self.RmFlashcard, font=('Arial', 15))
+        RmFlashcardBtn.grid(row=1, column=0, padx=10, pady=10, sticky=tk.NSEW)
+
+    def AddFlashcard(self):
+        self.destroy()
+        AddFlashcard(Menu).mainloop()
+    
+    def RmFlashcard(self):
+        self.destroy()
+        AddFlashcard(Menu).mainloop()
+```
+
+Adding back button functionality:
+
+```python
+def backButton(self):
+        self.destroy()
+       (self.previousWin)().mainloop()
+```
+
+To see a video of me testing if this works, please see FullImplementationTest1.mp4
