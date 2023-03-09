@@ -287,11 +287,13 @@ or interactive. It will just be an output to see visually. Another limitation is
 information that can be stored to be represented on the mindmap; although it is an advantage that the Mind Map will be easy to read,
 it is probable that in some people's perspective this will be a lacking feature.
 
-The limitations 
+The limitations of the flashcard software is that it won't have sub-cardsets within the scope of this program, however it may be able to in future iterations.
 
-## Success Criteria
+## Program Requirements
 
-The following table contains the success criteria for the project. It uses a numbering system in the form (section number, requirement number). e.g. (1.1 refers to Requirement 1 from Section 1). Any requirements listed in parentheses, (), are possible requirements that may be implemented at a post initial-development stage.
+The following table contains the program requirements. This is a list of features that would be needed to call any certain version a 'fully fledged' piece of software. Therefore, not all features listed may be fully implemented within the scope of the project.
+
+It uses a numbering system in the form (section number, requirement number). e.g. (1.1 refers to Requirement 1 from Section 1). Any requirements listed in parentheses, (), are possible requirements that could be implemented at a stage after the program was in a state where it would be able to be fully released; it would pose the possibility to improve the software, but is not essential to its full use.
 
 - **Section 1** - Application Access and User Interface
 - **Section 2** - Mind Map Functions and Algorithms 
@@ -384,6 +386,22 @@ could be very promising for applications in my buisness".
 However, she did note that the inclusion of the flashcard features would not be of use and could become annoying if they were to 
 prominent. Because of this, it was decided that the configuration file should have a parameter to disable the flashcard features. Additionally, this functionality will extend to being able to choose to only have the flashcard feature over the mindmap feature. This addition can be seen in criterion 1.7 .
 
+## Project Success Criteria
+
+Since the program requirements lay out a vast selection of functionality that would be packaged into a final iteration of LambdaNotes, it is important to create a set of criteria upon which the success of this project, in its own scope, can be measured against.  
+
+The general aim for this project is not to create a finalised piece of software, but instead put important foundations in place so that, by the end of the project, the code could be added upon to create all the functions one would need in a full release of LambdaNotes.  
+
+The following table lists these measures of success, and will reappear upon completion of the project implementation in the *Evaluation* section:
+
+| Success Criteria Code | Description |
+| | |
+| 1 | Have a functioning system to run SQL transactions to add and remove flashcards |
+| 2 | Have a functional GUI to navigate the existing modules |
+| 2.1 | Have a robust, object oriented approach to window creation and switching |
+| 2.2 | Have a clearly tested way to add extra windows into the pre-existing UI when required |
+| 3 | Have a functioning mind map creation window |
+| 4 | Have a intuitive full build prototype |
 
 ## Pre-Design Phase Prototyping
 
