@@ -10,6 +10,15 @@ This planned application lends itself to a computational solution since it is ai
 Firstly,the computer program should be able to take in a prompt, and then continually ask for linked information, keeping track of which 'nodes' link to which, and be able to return this information in a variety of text-based and graphical ways. This can be thought of as creating a digital mind map.
 Furthermore, the program will have a flashcard feature which will employ spaced repition techniques. This is very suitable for a computational solution since a computer can keep track of which flashcards should be shown to the user next more efficiently and effectively than a human could manually. 
 
+Furthermore, the project will use the following computational methods:
+
+- Abstraction:
+-- General Problem Abstraction: During the Design phase, I will implicitly use the ideas of abstraction to reduce the problem down to a more simple derivative, void of any unecessary complexity.
+-- Using Object-Oriented Abstraction:
+--- Data Abstraction: Objects that the software uses (e.g. GUI windows, Mindmaps etc) will hide its data, which will only be accessed through methods. 
+--- Process Abstraction: When using OOP to create scripts that will be called from elsewhere, I need not worry about the inner implementation of each function/process I call. This abstracts out the sometimes complicated information on implementations, and reduces the problem of using the script elsewhere when necessary to simply knowing the parameters needed and the preconditions.
+- Decomposition: I will use this method heavily in the Design section to break down the code to better understand the individual modules that will be needed to make the software full and functional.
+
 ## Potential End-Users and Stakeholders
 The clientelle this application will be aimed at includes students, event planners and anyone looking to brainstorm. 
 
@@ -23,6 +32,7 @@ All of this points to the advantages of using a mind-map note taking system in t
 Flashcards are a common method of revising and have been for many years. However, many people do not use these effectively and so do not gain the full potential of the method. Spaced Repition has become increasingly recognised as one of the best way of revising. In an article from the *Policy Insights from the Behavioral and Brain Sciences* journal, it is said 'Hundreds of studies in cognitive and educational psychology have demostrated that spacing out repeated encounters with the material over time produces superior long-term learning. [...] Spaced review or practice enhances diverse forms of learning, including memory, problem solving, and generalization to new situations. Spaced practice [...] has tremendous potential to improve educational outcomes.' (Kang, 2016, pp. 12). 
 
 If the program can effectively use a scheduling system to apply spaced repitition in a flashcard-oriented manner, it will be incredibly beneficial to studying applications.
+
 #### Business Applications
 In an article from the *Journal of Contemporary Management Research* states 'Mind Maps can actually facilitate the 
 core business skills – such as choosing from among alternatives, organizing one's own and also other's ideas, analyzing, defining and 
@@ -260,8 +270,7 @@ In a context of studying, this will help build links between knowledge and hence
 ###### Date Storage / Databases:
 
 
-The data created by a creation of a Mind Map will be stored in some way for later retrieval. Furthermore, (although not a success 
-criteria of the project) it would be optimal to have a website where users can upload their Mind Maps for other's use. Said website
+The data created by a creation of a Mind Map or a flashcard set will be stored in some way for later retrieval. Furthermore, it would be optimal to have a website where users can upload their Mind Maps and Sets for other's use. Said website
 could also be used as the landing page to download the software.
 
 
@@ -277,6 +286,8 @@ One limitation of my solution is that the mind map output (at least in its first
 or interactive. It will just be an output to see visually. Another limitation is that there won't be an option for added 
 information that can be stored to be represented on the mindmap; although it is an advantage that the Mind Map will be easy to read,
 it is probable that in some people's perspective this will be a lacking feature.
+
+The limitations 
 
 ## Success Criteria
 
