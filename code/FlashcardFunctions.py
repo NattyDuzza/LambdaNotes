@@ -65,7 +65,7 @@ class AddFlashcards: #class specifically for functions for adding flashcards.
         res = self.cur.execute(""" 
                                 SELECT MAX(CardID)
                                 FROM Flashcards
-                                WHERE setID = ?;""", (self.setID,)) #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package.
+                                WHERE setID = ?;""", (self.setID,)) #executes transaction on database, to gain knowledge of current highest cardID in a specific cardset. Use of 'res' is standard practice for SQLite package.
         cardID = res.fetchall() #fetches result of SQL transaction
         cardID = cardID[0][0]
         

@@ -233,7 +233,7 @@ class AddFlashcard(tk.Tk):
         backButton.grid(row=0, column=0, padx=(2,2), pady=(2,10), sticky=tk.W)
 
         changeCardsetBtn = tk.Button(self.topBarFrame, text="Charge Cardset", command=self.changeCardset)
-        changeCardsetBtn.grid(row=0, column=3, sticky=tk.E, pady=(7,0))
+        changeCardsetBtn.grid(row=0, column=3, sticky=tk.E, pady=(2,10))
 
         FlashcardFrontLbl = tk.Label(self.FlashcardFrontEntryFrame, text="Flashcard Front:", font=('Arial', 17))
         FlashcardFrontLbl.grid(row=0, column=0, sticky=tk.EW)

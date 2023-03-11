@@ -370,7 +370,7 @@ This works as expected and results in the following output:
 
 ![MainRemovalWin2](pictures/MainRemovalWin2.png)
 
-#### Using Scroll-list:
+#### Using Scroll-list Mutlipick:
 
 As discussed in the Design segment, I will route UI requests for SQL-related transactions through the FlashcardFunctions.py file and higher-level functional requests through UIbackend.py as well as some processes natively in the PrelimUI file.
 

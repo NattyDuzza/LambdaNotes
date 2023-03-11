@@ -10,6 +10,17 @@ This planned application lends itself to a computational solution since it is ai
 Firstly,the computer program should be able to take in a prompt, and then continually ask for linked information, keeping track of which 'nodes' link to which, and be able to return this information in a variety of text-based and graphical ways. This can be thought of as creating a digital mind map.
 Furthermore, the program will have a flashcard feature which will employ spaced repition techniques. This is very suitable for a computational solution since a computer can keep track of which flashcards should be shown to the user next more efficiently and effectively than a human could manually. 
 
+Furthermore, the project will use the following computational methods:
+
+- Pathfinding: To find paths between information nodes in mindmaps, I intend to use an algorithm, such as Djikstra's algorithm, to allow the user to find how snippets of information link to one another.
+- Random Generation: To ensure that flashcard ordering upon retrieval has some element of randomness to it, a computational approach allows me to generate random numbers and implement the results in a way to create a suitable and effective flashcard weighting algorithm.
+- Abstraction:
+  - General Problem Abstraction: During the Design phase, I will implicitly use the ideas of abstraction to reduce the problem down to a more simple derivative, void of any unecessary complexity.
+  - Using Object-Oriented Abstraction:
+    - Data Abstraction: Objects that the software uses (e.g. GUI windows, Mindmaps etc) will hide its data, which will only be accessed through methods. 
+    - Process Abstraction: When using OOP to create scripts that will be called from elsewhere, I need not worry about the inner implementation of each function/process I call. This abstracts out the sometimes complicated information on implementations, and reduces the problem of using the script elsewhere when necessary to simply knowing the parameters needed and the preconditions.
+- Decomposition: I will use this method heavily in the Design section to break down the code to better understand the individual modules that will be needed to make the software full and functional.
+
 ## Potential End-Users and Stakeholders
 The clientelle this application will be aimed at includes students, event planners and anyone looking to brainstorm. 
 
@@ -23,6 +34,7 @@ All of this points to the advantages of using a mind-map note taking system in t
 Flashcards are a common method of revising and have been for many years. However, many people do not use these effectively and so do not gain the full potential of the method. Spaced Repition has become increasingly recognised as one of the best way of revising. In an article from the *Policy Insights from the Behavioral and Brain Sciences* journal, it is said 'Hundreds of studies in cognitive and educational psychology have demostrated that spacing out repeated encounters with the material over time produces superior long-term learning. [...] Spaced review or practice enhances diverse forms of learning, including memory, problem solving, and generalization to new situations. Spaced practice [...] has tremendous potential to improve educational outcomes.' (Kang, 2016, pp. 12). 
 
 If the program can effectively use a scheduling system to apply spaced repitition in a flashcard-oriented manner, it will be incredibly beneficial to studying applications.
+
 #### Business Applications
 In an article from the *Journal of Contemporary Management Research* states 'Mind Maps can actually facilitate the 
 core business skills – such as choosing from among alternatives, organizing one's own and also other's ideas, analyzing, defining and 
@@ -220,12 +232,13 @@ The analyses of these will be formatted as following:
 
 ## Planned Solution
 
+The following is the planned soltuion for a full LambdaNotes release. As will be discussed in due course, not every feature will reside in the scope of the implementation of this project, however it will still be used accordingly in the *Design* section.
+
 ### Visual 
 ###### UI:
 
 
-The program will boot into a window featuring a simple to understand UI. This menu will have options to open a current mind map,
-make a new one or see a manual for the program.
+The program will boot into a window featuring a simple to understand UI. This menu will have options to create a flashcard deck, or open a prexisting one and options to open a current mind map or make a new one.
 
 
 ###### Mind Map:
@@ -260,8 +273,7 @@ In a context of studying, this will help build links between knowledge and hence
 ###### Date Storage / Databases:
 
 
-The data created by a creation of a Mind Map will be stored in some way for later retrieval. Furthermore, (although not a success 
-criteria of the project) it would be optimal to have a website where users can upload their Mind Maps for other's use. Said website
+The data created by a creation of a Mind Map or a flashcard set will be stored in some way for later retrieval. Furthermore, it would be optimal to have a website where users can upload their Mind Maps and Sets for other's use. Said website
 could also be used as the landing page to download the software.
 
 
@@ -278,9 +290,13 @@ or interactive. It will just be an output to see visually. Another limitation is
 information that can be stored to be represented on the mindmap; although it is an advantage that the Mind Map will be easy to read,
 it is probable that in some people's perspective this will be a lacking feature.
 
-## Success Criteria
+The limitations of the flashcard software is that it won't have sub-cardsets within the scope of this program, however it may be able to in future iterations.
 
-The following table contains the success criteria for the project. It uses a numbering system in the form (section number, requirement number). e.g. (1.1 refers to Requirement 1 from Section 1). Any requirements listed in parentheses, (), are possible requirements that may be implemented at a post initial-development stage.
+## Program Requirements
+
+The following table contains the program requirements. This is a list of features that would be needed to call any certain version a 'fully fledged' piece of software. Therefore, not all features listed may be fully implemented within the scope of the project.
+
+It uses a numbering system in the form (section number, requirement number). e.g. (1.1 refers to Requirement 1 from Section 1). Any requirements listed in parentheses, (), are possible requirements that could be implemented at a stage after the program was in a state where it would be able to be fully released; it would pose the possibility to improve the software, but is not essential to its full use.
 
 - **Section 1** - Application Access and User Interface
 - **Section 2** - Mind Map Functions and Algorithms 
@@ -373,6 +389,23 @@ could be very promising for applications in my buisness".
 However, she did note that the inclusion of the flashcard features would not be of use and could become annoying if they were to 
 prominent. Because of this, it was decided that the configuration file should have a parameter to disable the flashcard features. Additionally, this functionality will extend to being able to choose to only have the flashcard feature over the mindmap feature. This addition can be seen in criterion 1.7 .
 
+## Project Success Criteria
+
+Since the program requirements lay out a vast selection of functionality that would be packaged into a final iteration of LambdaNotes, it is important to create a set of criteria upon which the success of this project, in its own scope, can be measured against.  
+
+The general aim for this project is not to create a finalised piece of software, but instead put important foundations in place so that, by the end of the project, the code could be added upon to create all the functions one would need in a full release of LambdaNotes.  
+
+The following table lists these measures of success, and will reappear upon completion of the project implementation in the *Evaluation* section:
+
+| Success Criteria Code | Description |
+| 1 | Have a functioning system to run SQL transactions to add and remove flashcards |
+| 2 | Have a functional GUI to navigate the existing modules |
+| 2.1 | Have a robust, object oriented approach to window creation and switching |
+| 2.2 | Have a clearly tested way to add extra windows into the pre-existing UI when required |
+| 3 | Have a functioning mind map creation window |
+| 3.1 | Have a visual output feature for when the mind map has been created |
+| 4 | Have an intuitive full build prototype |
+| 5 | Gain positive feedback from stakeholders at the end of the initial implementation |
 
 ## Pre-Design Phase Prototyping
 
