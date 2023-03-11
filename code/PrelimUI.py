@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import UIbackend as UI
+import FlashcardRetrieval as Fr
 
 database = "databases/Flashcards.db"
 
@@ -24,13 +25,19 @@ class Menu(tk.Tk):
         #-------------------------------------------
 
         #elements
+        AddFlashcardBtn = tk.Button(self, text="Revise Flashcards", command=self.ReviseFlashcard, font=('Arial', 15))
+        AddFlashcardBtn.grid(row=0, column=0, padx=10, pady=10, sticky=tk.NSEW)
 
         AddFlashcardBtn = tk.Button(self, text="Add Flashcards", command=self.AddFlashcard, font=('Arial', 15))
-        AddFlashcardBtn.grid(row=0, column=0, padx=10, pady=10, sticky=tk.NSEW)
+        AddFlashcardBtn.grid(row=1, column=0, padx=10, pady=10, sticky=tk.NSEW)
 
         RmFlashcardBtn = tk.Button(self, text="Remove Flashcards", command=self.RmFlashcard, font=('Arial', 15))
         RmFlashcardBtn.grid(row=2, column=0, padx=10, pady=10, sticky=tk.NSEW)
-
+    
+    def ReviseFlashcard(self):
+        self.destroy()
+        ChangeCardset(RetrievalWin).mainloop()
+    
     def AddFlashcard(self):
         self.destroy()
         AddFlashcard(Menu).mainloop()
@@ -274,10 +281,78 @@ class AddFlashcard(tk.Tk):
         self.FlashcardBackEntry.delete(0, tk.END)
 
         
+class RetrievalWin(tk.Tk):
 
+    def __init__(self, previousWin):
+        super().__init__()
+        self.previousWin = previousWin
+
+        self.confidence = tk.StringVar()
+
+        #window configuration
+        self.title("LambdaNotes - Revise Flashcards")
+        self.geometry("300x350")
+
+        #-------------------------------------------------
+
+        #frames
+        self.topBarFrame = tk.Frame(self)
+        self.topFrame = tk.Frame(self)
     
+        self.topBarFrame.grid(row=0, column=0, sticky=tk.W)
+        self.topFrame.grid(row=1, column=0, sticky=tk.NSEW)
 
+        #-------------------------------------
+
+        #elements
+
+        backButton = tk.Button(self.topBarFrame, text="Back", command = lambda: self.backButton())
+        backButton.grid(row=0, column=0, padx=(2,2), pady=(2,10), sticky=tk.W)
+
+        self.frontLabel = tk.Label(self.topFrame, font=('Arial', 24))
+        self.frontLabel.grid(row=0, column=1, padx=100, pady=30, sticky=tk.NSEW)
+
+        self.revealButton = tk.Button(self.topFrame, text="Reveal", command=lambda: self.reveal())
+        self.revealButton.grid(row=1, column=1, padx=20, pady=20, sticky=tk.NSEW)
+
+        self.retriever = Fr.Retriever(track.setID, self)
+        self.retriever.main()
+       
+        self.retriever.retrieveFront()
+
+    def backButton(self):
+        self.destroy()
+        (self.previousWin)().mainloop()
+    
+    def reveal(self):
+        self.createHalf()
+        self.retriever.retrieveBack()
+
+    def createHalf(self):
+        self.bottomHalfFrame = tk.Frame(self)
+        self.bottomHalfFrame.grid(row=2, column=0, sticky=tk.NSEW)
+
+        self.backLabel = tk.Label(self.bottomHalfFrame, font=('Arial', 24))
+        self.backLabel.grid(row=0, column=1, pady=20, sticky=tk.NSEW)
+
+        self.goodBtn = tk.Button(self.bottomHalfFrame, text="Good", command=lambda: self.cleanUP('good'))
+        self.goodBtn.grid(row=1, column=0, padx=20, sticky=tk.NSEW)
+
+        self.okayBtn = tk.Button(self.bottomHalfFrame, text="Okay", command=lambda: self.cleanUP('okay'))
+        self.okayBtn.grid(row=1, column=1, padx=20, sticky=tk.NSEW)
+
+        self.badBtn = tk.Button(self.bottomHalfFrame, text="Bad", command=lambda: self.cleanUP('bad'))
+        self.badBtn.grid(row=1, column=2, padx=20, sticky=tk.NSEW)
+    
+    def cleanUP(self, choice):
+        
+        self.confidence = choice
+        self.retriever.setConfidence()
+        
+        self.bottomHalfFrame.destroy()
+        self.retriever.retrieveFront()
 
 track = UI.Tracker(1)
 Menu().mainloop()
+#RetrievalWin(Menu).mainloop()
 

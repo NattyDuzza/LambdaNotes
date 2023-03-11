@@ -29,4 +29,4 @@ You can see the window I have labelled as '1.' will be the main one and can be s
 
 The second window (2) contains a drop down list containing all the cardsets that have been created. 
 
-I will refer to, in the implementation, the main window as MainRemovalWin and the cardset choice as CardsetChooseWin. 
+I will refer to, in the implementation, the main window as MainRemovalWin and the cardset choice as ChangeCardset. 
