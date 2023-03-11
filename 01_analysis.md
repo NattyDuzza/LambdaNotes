@@ -12,11 +12,13 @@ Furthermore, the program will have a flashcard feature which will employ spaced 
 
 Furthermore, the project will use the following computational methods:
 
+- Pathfinding: To find paths between information nodes in mindmaps, I intend to use an algorithm, such as Djikstra's algorithm, to allow the user to find how snippets of information link to one another.
+- Random Generation: To ensure that flashcard ordering upon retrieval has some element of randomness to it, a computational approach allows me to generate random numbers and implement the results in a way to create a suitable and effective flashcard weighting algorithm.
 - Abstraction:
--- General Problem Abstraction: During the Design phase, I will implicitly use the ideas of abstraction to reduce the problem down to a more simple derivative, void of any unecessary complexity.
--- Using Object-Oriented Abstraction:
---- Data Abstraction: Objects that the software uses (e.g. GUI windows, Mindmaps etc) will hide its data, which will only be accessed through methods. 
---- Process Abstraction: When using OOP to create scripts that will be called from elsewhere, I need not worry about the inner implementation of each function/process I call. This abstracts out the sometimes complicated information on implementations, and reduces the problem of using the script elsewhere when necessary to simply knowing the parameters needed and the preconditions.
+  - General Problem Abstraction: During the Design phase, I will implicitly use the ideas of abstraction to reduce the problem down to a more simple derivative, void of any unecessary complexity.
+  - Using Object-Oriented Abstraction:
+    - Data Abstraction: Objects that the software uses (e.g. GUI windows, Mindmaps etc) will hide its data, which will only be accessed through methods. 
+    - Process Abstraction: When using OOP to create scripts that will be called from elsewhere, I need not worry about the inner implementation of each function/process I call. This abstracts out the sometimes complicated information on implementations, and reduces the problem of using the script elsewhere when necessary to simply knowing the parameters needed and the preconditions.
 - Decomposition: I will use this method heavily in the Design section to break down the code to better understand the individual modules that will be needed to make the software full and functional.
 
 ## Potential End-Users and Stakeholders
@@ -230,12 +232,13 @@ The analyses of these will be formatted as following:
 
 ## Planned Solution
 
+The following is the planned soltuion for a full LambdaNotes release. As will be discussed in due course, not every feature will reside in the scope of the implementation of this project, however it will still be used accordingly in the *Design* section.
+
 ### Visual 
 ###### UI:
 
 
-The program will boot into a window featuring a simple to understand UI. This menu will have options to open a current mind map,
-make a new one or see a manual for the program.
+The program will boot into a window featuring a simple to understand UI. This menu will have options to create a flashcard deck, or open a prexisting one and options to open a current mind map or make a new one.
 
 
 ###### Mind Map:
@@ -395,13 +398,14 @@ The general aim for this project is not to create a finalised piece of software,
 The following table lists these measures of success, and will reappear upon completion of the project implementation in the *Evaluation* section:
 
 | Success Criteria Code | Description |
-| | |
 | 1 | Have a functioning system to run SQL transactions to add and remove flashcards |
 | 2 | Have a functional GUI to navigate the existing modules |
 | 2.1 | Have a robust, object oriented approach to window creation and switching |
 | 2.2 | Have a clearly tested way to add extra windows into the pre-existing UI when required |
 | 3 | Have a functioning mind map creation window |
-| 4 | Have a intuitive full build prototype |
+| 3.1 | Have a visual output feature for when the mind map has been created |
+| 4 | Have an intuitive full build prototype |
+| 5 | Gain positive feedback from stakeholders at the end of the initial implementation |
 
 ## Pre-Design Phase Prototyping
 

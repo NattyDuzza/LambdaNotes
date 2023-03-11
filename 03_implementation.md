@@ -177,7 +177,7 @@ To test the code as I go along, I have made a python script called TestingEnviro
 
 #### ConfigCheck
 
-I decided to implement this function first since it largely affects how the rest of the code runs in this section. For efficiency, *config.txt* only includes the fields up to and including *flashcard-queue*, since that is the only field being used in the development of this section. In the next sections *config.txt* will grow to accomodate what is needed in those sections. To test the config file could be read correctly, I wrote the following:
+I decided to implement this function first since it largely affects how the rest of the code runs in this section. For efficiency, *config.txt* only includes the fields up to and including *flashcard-queue*, since that is the only field being used in the development of this section. In the next sections *config.txt* may grow to accomodate what is needed in those sections. To test the config file could be read correctly, I wrote the following:
 
 ```python
 #in FlashcardFunctions.py
@@ -275,7 +275,7 @@ When run, the code produced the following output:
 
 The code successfully isolates the value of the field important for this process. This value needs to be checked and placed into a variable that can be accessed by other subroutines in the class. I am future proofing the development by placing the value in a variable; I could just return the value read, or return a boolean value, however by putting it in a variable I still have the option of using object oriented variables at a later date if the planned solution of simply returning to other subroutines.
 
-After another addition of code, the code looks as such:
+After another iteration of code, the code looks as such:
 
 ```python
 
@@ -371,7 +371,7 @@ This produces the same outputs as before when using a slightly modified version 
 
 For now, I am happy that CheckConfig() works as intended and will continue to work when used by other subroutines.
 
-##### Updates to CongifCheck
+##### Iteration 2 (Queue creation)
 
 At the point of writing this, I have now implemented the NewQueue and DeQueue features, see 3.1.3.4. This calls for the ConfigCheck subroutine to be changed slightly. This subroutine is a good place to make the queue that will be needed. This leaves the subroutine as follows:
 
@@ -411,6 +411,19 @@ print(Adder.queue)
 Results in an error when the configuration file is set to make the program not use a queue, which is expected. However, when the configuration file is set to use the queue, the output is as follows:
 
 ![ConfigCheckMakeQueueTest1](pictures/ConfigCheckMakeQueueTest1.png)
+
+##### Review  
+
+**What has been achieved?:** 
+- A paradigm shift has changed the intended solution to the problem in an overall advantageous fashion
+- Iteration 1: worked as expected and provided a simple solution to reading the configuration file and setting the object's variable accordingly
+- Iteration 2: built upon the first iteration to enable creation of a queue data structure and worked as expected  
+
+**Program Requirements Satisfied:** 
+
+**Next Steps:**  
+
+The function works as needed and the continued development of the wider software is unlikely to require additional changes to this specific version of a configuration file check.  
 
 #### GetInput
 
@@ -505,6 +518,51 @@ In this test, there is now an error thrown up. This is due to 'Testing' not bein
 This test data now results in only one error message being outputted, which is what was wanted.
 
 This subroutine now completes its job as required, therefore I am happy to move on to another. 
+
+##### Iteration 2 (Preliminary UI refactoring)
+
+As will be documented in full later, the code had to be updated to be included in the preliminary UI that is being used for development. The changes were to how the information was passed into the function:
+
+```python
+def GetInput(self, inpFront, inpBack, inpConf): #will need to be updated when packaged into a GUI.
+        valid = True #used to check input is valid
+        front = inpFront
+        back = inpBack
+        conf = inpConf
+        validConf = ['good', 'okay', 'bad'] #set of valid confidences, in list form for possibility of extra options in the future. 
+    
+        if not front: #the following statements check the inputs are not null, and if they are, change the valid variable accordingly.
+            print("front")
+            valid = False
+        if not back:
+            print("back")
+            valid = False
+        
+        if conf not in validConf: #checks if users input is not in set of valid inputs. 
+            print("conf")
+            valid = False
+
+        if valid == False:
+            print("Error")
+            quit() #quits if inputs are invalid
+            
+        self.inputsList = [front, back, conf] #adds the three inputs into a list.
+```
+
+Since this works in tandem with other functions to add flashcard information to the database, it can be tested by running the program and checking the persitent database to check it has worked correctly. Such tests are carried out later in the report, at the point where iteration 2 was needed.
+
+##### Review
+
+**What has been achieved?:**  
+
+- Iteration 1: Provided a working functionality to take user inputs and render them in a usable format for subsequent functions that will need them
+- Iteration 2: Updated the code to enable the function to be used in the preliminary UI structure  
+
+**Program Requirements Satisfied:** 
+
+**Next Steps:**  
+
+The code works as expected and does not have any issues that seem to need to be fixed. The only room for change is in its return format; at some point it may be useful to reassess how the data is stored and returned since using a list as it is using at the minute seems somewhat inelegant.
 
 #### CardPointer
 
@@ -673,7 +731,7 @@ Now the max cardID in the specified Cardset is 2, and is correctly outputted whe
 
 At this point, I am happy the code is doing what it is expected to, and I can continue on to implement the next subroutine.
 
-##### Updates to CardPointer
+##### Iteration 2 (Resolving Default ID Value)
 
 As disucssed in 3.1.3.5, the default value of the cardID must be 0. Hence the code becomes the following:
 
@@ -693,6 +751,61 @@ As disucssed in 3.1.3.5, the default value of the cardID must be 0. Hence the co
 
         return cardID
 ```
+
+##### Iteration 3 (Fixing Previous Database Logic Oversight)
+
+Whilst I was carrying out further implementation I came across an SQLite error which was caused by a non-unique primary key. Knowing the primary key is sourced from the CardPointer function, I returned to FlashcardFunctions.py to look where the error may stem from. 
+
+Instantly I realised by narrowing down the SQL query to a certain cardset that it allows for duplicate primary keys, which cause an error. To fix this I change the name of the then current function to SetCardPointer() and rewrite CardPointer() so the two functions look as follows:
+
+```python
+#from FlashcardFunctions.py
+
+def SetCardPointer(self):
+
+    res = self.cur.execute(""" 
+                            SELECT MAX(CardID)
+                            FROM Flashcards
+                            WHERE setID = ?;""", (self.setID,)) #executes transaction on database, to gain knowledge of current highest cardID in a specific cardset. Use of 'res' is standard practice for SQLite package.
+    cardID = res.fetchall() #fetches result of SQL transaction
+    cardID = cardID[0][0]
+    
+    if cardID is None:
+        cardID = 0
+
+    return cardID
+
+def CardPointer(self):
+    
+    res = self.cur.execute(""" 
+                            SELECT MAX(CardID)
+                            FROM Flashcards;""") #executes transaction on database, to gain knowledge of current highest cardID. Use of 'res' is standard practice for SQLite package.
+    cardID = res.fetchall() #fetches result of SQL transaction
+    cardID = cardID[0][0]
+    
+    if cardID is None:
+        cardID = 0
+
+    return cardID
+
+```
+I chose to leave the original code in the file under a different name in case it becomes useful at some other point.
+This now removes the error that was causing problems when adding flashcards to multiple cardsets.
+
+##### Review  
+
+**What has been achieved?:** 
+- Iteration 1: successfully connects to the database and retrieves *a* max cardID
+- Iteration 2: successfully corrects issue with default cardID value
+- Iteration 3: successfully eradicates major issue so that the application of CardPointer stays robust when applied to multiple cardsets. Additionally, creates a new function that may be used if ever needed.
+
+**Program Requirements Satisfied:**
+
+
+**Next Steps:**  
+
+There is no need for further developments of this function, however a great amount of inspiration for the similar function that will be needed for finding the max setID will be drawn from this. Having created a stable implementation for CardPointer will help in ensuring that this similar function has a smooth and efficient development.
+
 #### NewQueue + EnQueue
 
 NewQueue is a very simple subroutine. All it must do is creat an empty list/queue that can be subsequently appened to if necessary. 

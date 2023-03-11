@@ -105,11 +105,13 @@ The following diagram shows what this problem can be decomposed down to at a sti
 ![UserAddDecomp](pictures/FlashcardAddDecomp.drawio.png)
 
 
-The design incorporates two methods of flow through the program, based on a configuration file. This relates to 1.8 of the *Success Criteria*. Furthermore, the design also addresses 3.2 and 3.3 of the same criteria. The reason for having these two options is that if the user wants to minimise the chance of losing information, insantly adding any new flashcard to the persisten database is optimal. If, however, the user would prefer to be able to review the flashcards (e.g. remove or edit) before they are commited to the database, using a in-memory data structure would be suitable. The user can decide what is more important to them. For many users the program will seemingly run exactly the same, however for more involved users this flexibility aims to be a satisfying addition.
+The design incorporates two methods of flow through the program, based on a configuration file. This relates to 1.8 of the *Program Requirements*. Furthermore, the design also addresses 3.2 and 3.3 of the same criteria. The reason for having these two options is that if the user wants to minimise the chance of losing information, insantly adding any new flashcard to the persisten database is optimal. If, however, the user would prefer to be able to review the flashcards (e.g. remove or edit) before they are commited to the database, using a in-memory data structure would be suitable. The user can decide what is more important to them. For many users the program will seemingly run exactly the same, however for more involved users this flexibility aims to be a satisfying addition.
 
 I will now list out the functions that will be needed when implementing this script.
 
-#### Constructor / __init__
+#### Constructor / __init__  
+
+Note: I did not initially intend to structure this section of the project using an object oriented paradigm, however after beginning implementation (see the relevant sections in *Implementation*) it became clear that this would be advantageous. Hence I returned to this section to make the relevant changes to the design.
 
 ##### Use:
 To create a 'Flashcard Adder' object to be used to add flashcards to a deck.
@@ -174,10 +176,10 @@ AddFlashcard
 #### FormatInputSQL
 
 ##### Use: 
-The subroutine will take an input as a parameter, and put it into a correct format to be passed into an SQL statement. 
+The subroutine will take an input as a parameter, and put it into a correct format to be passed into an SQL statement. It will then execute the statement and, depending on the state of the configuration file, commit the transactions to permanently change the persistent database.
 
 ##### Parameters: 
-- contents (a list of elements that must be put into the SQL statement.
+- contents (a list of elements that must be put into the SQL statement).
 
 ##### Variables: 
 - *string* statement (the formatted SQL statement)
@@ -191,6 +193,9 @@ Data passed through *contents* parameter is in the format : (UPDATE AFTER IMPLEM
 ##### Class:
 AddFlashcard
 
+##### Diagram:  
+
+Since this is one of the most important 
 
 #### ConfigCheck
 
