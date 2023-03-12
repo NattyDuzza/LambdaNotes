@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import UIbackend as UI
 import FlashcardRetrieval as Fr
+import MindMapCreation as MmC
 
 database = "databases/Flashcards.db"
 
@@ -25,14 +26,21 @@ class Menu(tk.Tk):
         #-------------------------------------------
 
         #elements
-        AddFlashcardBtn = tk.Button(self, text="Revise Flashcards", command=self.ReviseFlashcard, font=('Arial', 15))
-        AddFlashcardBtn.grid(row=0, column=0, padx=10, pady=10, sticky=tk.NSEW)
+        CreateMindmapBtn = tk.Button(self, text="Create Mindmap", command=self.CreateMindmap, font=('Arial', 15))
+        CreateMindmapBtn.grid(row=0, column=0, padx=10, pady=10, sticky=tk.NSEW)
+        
+        ReviseFlashcardBtn = tk.Button(self, text="Revise Flashcards", command=self.ReviseFlashcard, font=('Arial', 15))
+        ReviseFlashcardBtn.grid(row=1, column=0, padx=10, pady=10, sticky=tk.NSEW)
 
         AddFlashcardBtn = tk.Button(self, text="Add Flashcards", command=self.AddFlashcard, font=('Arial', 15))
-        AddFlashcardBtn.grid(row=1, column=0, padx=10, pady=10, sticky=tk.NSEW)
+        AddFlashcardBtn.grid(row=2, column=0, padx=10, pady=10, sticky=tk.NSEW)
 
         RmFlashcardBtn = tk.Button(self, text="Remove Flashcards", command=self.RmFlashcard, font=('Arial', 15))
-        RmFlashcardBtn.grid(row=2, column=0, padx=10, pady=10, sticky=tk.NSEW)
+        RmFlashcardBtn.grid(row=3, column=0, padx=10, pady=10, sticky=tk.NSEW)
+    
+    def CreateMindmap(self):
+        self.destroy()
+        MindmapCreationWin(Menu).mainloop()
     
     def ReviseFlashcard(self):
         self.destroy()
@@ -352,7 +360,87 @@ class RetrievalWin(tk.Tk):
         self.bottomHalfFrame.destroy()
         self.retriever.retrieveFront()
 
+class MindmapCreationWin(tk.Tk):
+
+    def __init__(self, previousWin):
+        super().__init__()
+
+        self.previousWin = previousWin
+        self.nodeName = tk.StringVar()
+        #window configuration
+
+        self.title("LambdaNotes - Create Mind Map")
+
+        #-------------------------------------------------
+
+        #frames
+
+        self.topBarFrame = tk.Frame(self)
+        self.mainFrame = tk.Frame(self)
+        self.bottomFrame = tk.Frame(self)
+        
+        self.buttonFrame = tk.Frame(self.mainFrame)
+        self.saveExitFrame = tk.Frame(self.bottomFrame)
+        self.errorLabelFrame = tk.Frame(self.bottomFrame)
+
+        self.topBarFrame.grid(row=0, column=0, sticky=tk.NSEW)
+        self.mainFrame.grid(row=1, column=0, sticky=tk.NSEW)
+        self.bottomFrame.grid(row=2, column=0, sticky=tk.NSEW)
+
+        self.buttonFrame.grid(row=2, column=0)
+        self.saveExitFrame.grid(row=0, column=2, sticky=tk.E)
+        self.errorLabelFrame.grid(row=1, column=0, sticky=tk.W)
+
+        #-------------------------------------------------------------------
+
+        #elements
+
+        backButton = tk.Button(self.topBarFrame, text="Back", command = lambda: self.backButton())
+        backButton.grid(row=0, column=0, padx=(2,2), pady=(2,10), sticky=tk.W)
+
+        nodeAddLabel = tk.Label(self.mainFrame, text="Enter Node Name:")
+        nodeAddLabel.grid(row = 0, column =0, sticky=tk.NSEW)
+
+        self.nodeNameEntry = tk.Entry(self.mainFrame, width=30, textvariable=self.nodeName, font=('Arial', 14))
+        self.nodeNameEntry.grid(row=1, column=0, padx=10, pady=15, sticky=tk.NSEW)
+
+        addNodeBtn = tk.Button(self.buttonFrame, text="Add Node To Mindmap", command=lambda: self.addNode())
+        addNodeBtn.grid(row=0, column=0, padx=10, sticky=tk.NSEW)
+
+        backtrackBtn = tk.Button(self.buttonFrame, text="Backtrack To: ", command=lambda: self.backtrack())
+        backtrackBtn.grid(row=0, column=1, padx=10, sticky=tk.NSEW)
+
+        saveExitBtn = tk.Button(self.saveExitFrame, text="Save and Exit", command=lambda: self.saveExit())
+        saveExitBtn.grid(row=0, column=0, padx=(135, 0), pady=25, sticky=tk.E)
+
+        errorNotificationLabel = tk.Label(self.errorLabelFrame, text="Error: ")
+        errorNotificationLabel.grid(row=0, column=0)
+
+        self.errorLabel = tk.Label(self.errorLabelFrame, text="test")
+        self.errorLabel.grid(row=0, column=1)
+
+        self.maker = MmC.Maker()
+
+    def backButton(self):
+        self.destroy()
+        (self.previousWin)().mainloop()
+
+    def addNode(self):
+        self.maker.input(False, self)
+        self.nodeNameEntry.delete(0, tk.END)
+
+    def backtrack(self):
+        self.maker.input(True, self)
+        self.nodeNameEntry.delete(0, tk.END)
+
+    def saveExit(self):
+        self.maker.create()
+        self.maker.output()
+        self.backButton()
+
+
 track = UI.Tracker(1)
 Menu().mainloop()
 #RetrievalWin(Menu).mainloop()
+#MindmapCreationWin(Menu).mainloop()
 

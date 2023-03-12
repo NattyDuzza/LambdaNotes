@@ -632,3 +632,46 @@ And looks like:
 
 I will now integrate a pathway to this function from the menu:
 
+```python
+#from PrelimUI.py
+
+class Menu(tk.Tk):
+    
+    def __init__(self):
+        super().__init__()
+
+        #window configuration
+        self.title('LambdaNotes - Main Menu')
+
+        #-------------------------------------------
+
+        #elements
+
+
+        ReviseFlashcardBtn = tk.Button(self, text="Revise Flashcards", command=self.ReviseFlashcard, font=('Arial', 15))
+        ReviseFlashcardBtn.grid(row=0, column=0, padx=10, pady=10, sticky=tk.NSEW)
+
+        AddFlashcardBtn = tk.Button(self, text="Add Flashcards", command=self.AddFlashcard, font=('Arial', 15))
+        AddFlashcardBtn.grid(row=1, column=0, padx=10, pady=10, sticky=tk.NSEW)
+
+        RmFlashcardBtn = tk.Button(self, text="Remove Flashcards", command=self.RmFlashcard, font=('Arial', 15))
+        RmFlashcardBtn.grid(row=2, column=0, padx=10, pady=10, sticky=tk.NSEW)
+    
+    def ReviseFlashcard(self):
+        self.destroy()
+        ChangeCardset(RetrievalWin).mainloop()
+    
+    def AddFlashcard(self):
+        self.destroy()
+        AddFlashcard(Menu).mainloop()
+    
+    def RmFlashcard(self):
+        self.destroy()
+        MainRemovalWin(Menu).mainloop()
+```
+
+Which gives the following menu successfully:
+
+![PrelimMenu](pictures/PrelimMenu.png)
+
+Where all buttons are working.

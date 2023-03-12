@@ -132,7 +132,7 @@ AddFlashcard
 #### CardPointer
 
 ##### Use: 
-To keep track of what the next free cardID is, by searching the Database at the start, and then keeping track through a variable.
+To keep track of what the next free cardID is, by searching the Database to find the current max cardID.
 
 ##### Parameters: 
 None
@@ -196,6 +196,7 @@ AddFlashcard
 ##### Diagram:  
 
 Since this is one of the most important 
+
 
 #### ConfigCheck
 
@@ -287,15 +288,11 @@ No return in the usual sense; changes the SQL database.
 - SQL statement is valid by the SQLite3 rules.
 
 
-### User Adds Flashcard Testing
+#### Subsequent Iterations Due To Implementation Changes
 
-This function of the program should have a predictable, reproducible output. It is clearly defined what must happen, and we can see if this is working through the use of the terminal SQLite3 interface. I will carry out the following tests during devlopement:
+Some changes were made during implementation when it was deemed necessary to improve the quality of the code:
 
-##### During Writing Code: 
-- (1) Consistently test each subroutine in an isolated environment.
-- (2) Consistently make sure the flow of each subroutine into another works as exected (any two subroutines in isolation).
-- (3) Test how the program handles errors, e.g. a precondition of a subroutine being ignored. 
-
-##### After All Subroutines Are Written:
-- (4) Make sure this singular function of the program is logically working as expected when subroutines are combined.
-Note: This will isolate the function *User Adds Flashcards*, and not test it incorporated in the wider program (this will come later).
+- CardPointer was placed into the AddFlashard class since it allowed to more easily access self.setID which was needed for the function.
+- A function setCardPointer was added alongside CardPointer due to a logic error early on in the implementation. (See *Implementation* section)
+- FormatInputSQL's planned parameter of contents was replaced by self.inputsList. It also gained parameters 'front' and 'back' which allowed for the mutliple flow types.
+- After UI integration, get input took 3 parameters (other than self) to replace the old in-function input methods.

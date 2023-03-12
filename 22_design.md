@@ -1,10 +1,10 @@
-### Flashcard Selection Algorithm
+## Flashcard Selection Algorithm
 
 It can be argued that the most important algorithm in the flashcard section of LambdaNotes is the actual algorithm that dictates the order the flashcards are presented to the user for review. 
 
 I will design two algorithms which work differently, and then test this using stakeholders to see what they find the most useful. For the scope of this project, I will implement the first algorithm however in the future once I carry out the human tests to determine the performance deltas between the two methods I will then change the optimal one into a computational equivalent (turn the pseudocode/flowchart into Python code and embed it in the GUI).
 
-#### Brainstorming  
+### Brainstorming  
 
 To initially come up with ideas of how the algorithms could work, I used paper to layout possible ideas:
 
@@ -12,9 +12,9 @@ To initially come up with ideas of how the algorithms could work, I used paper t
 
 You can see I came up with the idea of two different starting selections (the initial cards that will be tested and sorted). In the following section, I will lay out pseudocode for the two solutions.
 
-#### Pseudocode Algorithms - Iteration 1
+### Pseudocode Algorithms - Iteration 1
 
-##### Random Sub-selection 
+#### Random Sub-selection 
 
 ```
 USE RANDOM #use some kind of random library
@@ -66,7 +66,7 @@ ENDWHILE
 
 You can hopefully see that this algorithm randomly chooses a set number of flashcards from the overall cardset, and then continually sorts and outputs to the user so that they can revise them.
 
-##### Whole Cardset Selection
+#### Whole Cardset Selection
 
 ```
 USE RANDOM #use some kind of random library
@@ -114,7 +114,7 @@ ENDWHILE
 
 You can see the pseudocode for this version is very similar to the method previously described. The only big difference is that the retrieval function works with and sorts a list of every flashcard in the given cardset.
 
-##### Sort Functionality  
+#### Sort Functionality  
 
 I will use a bubble sort to implement the needed sorting functionality.
 
@@ -132,7 +132,7 @@ FUNCTION sort(list):
 ENDFUNCTION
 ```
 
-#### Pseudocode Algorithms - Iteration 2 
+### Pseudocode Algorithms - Iteration 2 
 
 After the completion of the initial pseudocode design of the major algorithms needed (but before any implementation), I thought some more about the way cards were being sorted.
 
@@ -169,7 +169,7 @@ FUNCTION retrieval
 ENDFUCTION
 ```
 
-#### Pseudocode Algorithms - Iteration 3
+### Pseudocode Algorithms - Iteration 3
 
 During implementation, I decided that for ease it would be better for the retrieve function to split down into smaller, more specialised functions. This allows another script to better control the flow of the code. 
 
@@ -215,6 +215,7 @@ FUNCTION setConfidence(BTN INPUT)
     ENDIF
     
 ENDFUCTION
+```
 
 #### PrelimUI Integration
 
@@ -232,7 +233,7 @@ FUNCTION createHalf
     UI POSITION bottomHalfFrame
     FRAME ADD WIDGETS {
         UI LABEL backLabel
-        UI BUTTON good, COMMAND = CleanUp('good)
+        UI BUTTON good, COMMAND = CleanUp('good')
         UI BUTTON okay, COMMAND = CleanUp('okay')
         UI BUTTON bad, COMMAND = CleanUp('bad')
     }
@@ -245,5 +246,6 @@ ENDFUNCTION
 ```
 The CreateHalf function is intended to render the bottom half of the window upon being called (by the reveal button). The CleanUp function passes the confidence that is needed by the backend algorithm to where it is needed as well as destroying the UI widgets in the bottom half ready for the next flashcard.
 
+Instead of the window having its own way to change cardset, when the user clicks from the menu to revise flashcards I will first make them visit the change cardset window that is used throughout the software:
 
-Instead of the window having its own way to change cardset, when the user clicks from the menu to revise flashcards I will first make them visit the change cardset window that is used throughout the software.
+![RetrievalWinFlow](pictures/RetrievalWinFlow.drawio.png)

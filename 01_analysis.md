@@ -46,7 +46,7 @@ Hence one can observe that the program will have applications in this sector as 
 
 It is true that the flashcard feature will not be as applicable in this area, however this is not a problem since LambdaNotes is tailored toward studying. Measures will also be taken to make sure this feature does not get in the way of business stakeholders.
 
-### Introduction to the Stakeholders
+### Introduction to the Individual Stakeholders
 
 Stakeholders will be presented as following:
 - A short biography of the person.
@@ -55,6 +55,42 @@ Stakeholders will be presented as following:
 - An analysis of all the answers.
 
 All stakeholders have been briefed on what LambdaNotes aims to achieve.
+
+#### Reasoning Behind The Predefined Questions
+
+##### Students
+
+- Would you class yourself as a enthusiastic student?
+
+This question aims to get a significant grasp on the students mindset. If they are not enthusiastic it may be the they will benefit more from a LambdaNotes solution. It also allows us to compare their enthusiasm for learning usually with the enthusiasm they show when testing the software, helping with evaluative feedback.
+
+- How much time would you say you study for a week outside of school (not including homework)?
+
+It is helpful to know this because it would allow us to see if, after a full release of LambdaNotes, if the students are working for more hours thanks to the software.
+
+- When you do partake in revision, what techniques do you use currently?
+
+This allows me to see what the student believes works for them and possibly take inspiration from the general consensus to be able to better tune LambdaNotes to its stakeholder audience. 
+
+- What experience do you have using mindmaps? Do you like them?
+
+This simply shows how likely the stakeholder would be to actually use LambdaNotes for this method, and how useful they preconceive it would be.
+
+- What experience do you have using flashcards? Do you like them?
+
+This, like the previous question, intends to find out the preconceived opinion the stakeholder holds towards using flashcards, and by induction using LambdaNotes.
+
+- Would you be more likely to make notes on paper or digitally?
+
+This intends to find out whether the student has room in their workflow for a computational solution; do they actually like using computers for revision?
+
+- What experience do you have with digital notetaking apps?
+
+By understanding their previous experiences, I can deduce what drew them to such applications and decide whether such features would be needed in LambdaNotes for it to be a success.
+
+- What would you look for in a digital notetaking application?
+
+This is a very significant question since its answer is a direct message about what is wanted by my stakeholders in the release version of LambdaNotes.
 
 #### Rupert (Full-time Student)
 
@@ -78,6 +114,10 @@ Rupert attends a non-selective state school. He is known as a struggling student
 - Q: What experience do you have using mindmaps? Do you like them?
 
   A: Not a lot, I've done them in class before when the teacher has set it as a task. I think they are better than normal notes. 
+
+- Q: What experience do you have using flashcards? Do you like them?
+
+  A: My teachers keep telling me to try using them, but it seems like a lot of work. They seem like a good idea.
 
 - Q: Would you be more likely to make notes on paper or digitally?
  
@@ -144,6 +184,10 @@ Alex is known to be a hard working student who strives for the top grades. He ha
 - Q: What experience do you have using mindmaps? Do you like them?
 
   A: I don't usually use mind maps, but I do think they are effective in connecting relevant information.
+
+- Q: What experience do you have using flashcards? Do you like them?
+
+  A: My teachers keep telling me to try using them, but it seems like a lot of work. They seem like a good idea.
 
 - Q: Would you be more likely to make notes on paper or digitally?
  
@@ -217,7 +261,7 @@ include so as to make LambdaNotes something fresh on the market.
 
 The analyses of these will be formatted as following:
 - An introduction to the program
-- Stakeholders current opinion on the software (if applicable)
+- Individual stakeholders current opinion on the software (if applicable)
 - List of features
 - Further analysis of selected features
 - What can be taken as inspiration from this software
@@ -225,7 +269,94 @@ The analyses of these will be formatted as following:
 
 ### Notion
 
+#### Introduction
+
+Notion is a comprehensive notetaking solution, allowing for typing of notes along with integration of what they call 'Galleries' which can take the form of items such as calendars. It could be argued that it is the most popular solution at the present time. It is for this reason that I am including it in this analysis even though it lacks proper mind map or flashcard features.
+
+Notion is, in fact, a software I have used extensively in the past. See below for an example of one of my subject pages:
+
+![ComparableNotion1](pictures/ComparableNotion1.png)
+
+I stopped using this as much as I found there to be too many features at my disosal; I spent more time deciding how to layout my revision space than actually revising.
+
+#### Individual Stakeholder Opinions
+
+Alex: "I use Notion extensively for making my A-Level biology notes, I enjoy the UI and the ability to stack pages."
+
+Gretchen: "I know some of my colleagues use Notion. I looked into it but it seemed like a big learning curve and I didn't want to waste time I could be using elsewhere."
+
+#### Main Features
+
+- Cross-platform
+  - Has a desktop, web and mobile app where data transfer in real time between all of them.
+- Very customisable: lots of layout and visual options.
+- Very expandable: can create as many revision pages as needed.
+- Has integration options for other softwares.
+
+##### Cross-Platform:
+
+Notion's ability to synchronise user created data between platforms is something that becomes very useful when you want to be able to access your materials from anywhere. 
+
+##### Customisability: 
+
+Notion has a very customisable interface. I have screen recorded the multitude of options that appear when you type the command key '/'. For this video, please see ComparableNotion1.mp4. 
+
+This very long list is mostly redundant, even for a long time user like myself. Furthermore, on the occasion I do have to use it, I still end up having to search online how to achieve something specific. 
+
+#### Points of Inspiration
+
+- Cross-Platform: Although the complexity of real-time updates and server-side storage is far beyond the scope of this project, it is something that I think would be very good to have in a complete version of LambdaNotes. 
+
+- Customisability: Notion's extensive amount of options one can choose from when creating pages makes, as can be seen by Gretchen's response, can be daunting and confusing even to the long-time user. For this reason, I want to ensure that LambdaNotes has a simple UI that is highly intuitive and only does exactly what is needed to create a efficient revision/planning environment.
+
+#### Conclusion
+
+Notion bares little resembelance functionally to the planned solution that is LambdaNotes, however it still has been useful to analyse possible features far down the line as well as make it clear what I do **not** want in the software I will create.
+
+
 ### Obsidian
+
+Obsidian is a note-taking application built around links between pages of information. It is common for the user to start on any one page and follow page links to deepen their retreival of knowledge, until they have followed enough links that they are back to where they came from, or they reach the end of a branch. 
+
+Once again, I have used Obsidian extensively; indeed, it is my current 'go-to' software for making long form written notes. In this section I will take screenshots from my own personal 'Vault', e.g.:
+
+![ComparableObsidian1](pictures/ComparableObsidian1.png)
+
+#### Individual Stakeholder Opinions
+
+Alex: "I am currently exploring with Obsidian, although I still mainly rely on Notion. I plan to try to move to Obsidian when I start university."
+
+#### Main Features
+
+- Ability to link pages of data
+- Visualises these links as a large graph where the nodes are the pages:
+
+![ComparableObsidian2](pictures/ComparableObsidian2.png)
+
+![ComparableObsidan3](pictures/ComparableObsidian3.png)
+
+- Can click on node on graph to take you to the page
+- Can view subgraphs (graph of connections to one specific node):
+
+![ComparableObsidian4](pictures/ComparableObsidian4.png)
+
+##### Linking Data:  
+
+Obsidian's main appeal is how you can find links between data that you have created. It is incredibly useful.
+
+##### Graph View:  
+
+The way that linked data is shown graphically is what draws many to Obsidian.
+
+#### Points of Inspiration
+
+- Linking Data: The planned solution of LambdaNotes will include a creation window where you can write in links between topics.
+
+- Graph View: Said creation window will output a mind map as a visual representation in a image file type. In fact, a limitation of Obsidian is that the software has to be open to view the graph, and you can't print it out. With the LambdaNotes solution, the mindmap file can be opened at any time and printed out as wished. 
+
+#### Conclusion
+
+Obsidian is a very impressive piece of software. Of course, LambdaNotes will not try to replace it, but take slight inspiration and try to achieve something different; rather than an explorable graph, the software will output a transferable and printable mindmap.
 
 ### Anki
 
@@ -397,7 +528,8 @@ The general aim for this project is not to create a finalised piece of software,
 
 The following table lists these measures of success, and will reappear upon completion of the project implementation in the *Evaluation* section:
 
-| Success Criteria Code | Description |
+| **Success Criteria Code** | **Description** |
+| :---: | ------------------ |  
 | 1 | Have a functioning system to run SQL transactions to add and remove flashcards |
 | 2 | Have a functional GUI to navigate the existing modules |
 | 2.1 | Have a robust, object oriented approach to window creation and switching |
