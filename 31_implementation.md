@@ -298,12 +298,10 @@ def FlashcardList(setID):
 ```
 However this results in the following output:
 
-OUTPUTS ONLY
 ```
 4
 []
 ```
-fake later
 
 I replaced the pass command with a print("Error") which, when the code was run, prints out 5 errors. 
 
