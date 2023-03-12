@@ -46,7 +46,43 @@ Hence one can observe that the program will have applications in this sector as 
 
 It is true that the flashcard feature will not be as applicable in this area, however this is not a problem since LambdaNotes is tailored toward studying. Measures will also be taken to make sure this feature does not get in the way of business stakeholders.
 
-### Introduction to the Individual Stakeholders
+### Stakeholders
+
+#### Survey of Students
+
+Since the main application of LambdaNotes is to help out with student life (a revision aid), I thought it helpful to conduct a small survey where those answering are intended to be students themselves. 
+
+I will use a Google Form to create and send out the link so that I can gain a general stakeholder (students) view point.
+
+##### Questions
+
+- Do you already use online / digital note-taking applications? (Yes / No)
+
+I chose to ask this question since it gets a sense of the percentage of students who are already adverse with computational solutions to note taking.
+
+- Would you be open to trying new note-taking solutions? (Yes / No)
+
+I chose to ask this question since it makes an estimate of the percentage of students that would be open to trying LambdaNotes.
+
+- Are you fully confident in your current revision techniques? (Yes / No)
+
+This question grasps as whether there is an unconfidence in the student population when it comes to revision techniques that LambdaNotes could address.
+
+##### Results:
+
+![Survey1](pictures/Survey1.png)
+
+You can see that the results are quite equal, with a slight bias towards not already using digital applications. This means there is a large percentage of the population who can be targeted to try out a novel digital solution.
+
+![Survey2](pictures/Survey2.png)
+
+A large majority of the sample are open to trying a new solution, which means LambdaNotes will be highly applicable.
+
+![Survey3](pictures/Survey3.png)
+
+A slightly smaller majority admit they are not fully confident in their current revision techniques and so it is possible that use of LambdaNotes could increase this confidence. 
+
+#### Presentation of Individual Stakeholders
 
 Stakeholders will be presented as following:
 - A short biography of the person.

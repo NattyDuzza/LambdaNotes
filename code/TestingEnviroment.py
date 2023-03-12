@@ -1,10 +1,11 @@
 import FlashcardFunctions as Ff
 
-Adder = Ff.AddFlashcards("databases/Flashcards.db", '3') #to create AddFlashcard 'Adder' object
+queue = Ff.General.NewQueue()
 
-Adder.ConfigCheck()
+print(queue)
 
-for i in range(0,3):
-  Adder.GetInput()
-  Adder.FormatInputSQL()
-  i += 1
+Ff.General.EnQueue(queue, "test1")
+Ff.General.EnQueue(queue, "test2")
+Ff.General.EnQueue(queue, "test3")
+
+print(queue)

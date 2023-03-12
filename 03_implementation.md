@@ -525,28 +525,28 @@ As will be documented in full later, the code had to be updated to be included i
 
 ```python
 def GetInput(self, inpFront, inpBack, inpConf): #will need to be updated when packaged into a GUI.
-        valid = True #used to check input is valid
-        front = inpFront
-        back = inpBack
-        conf = inpConf
-        validConf = ['good', 'okay', 'bad'] #set of valid confidences, in list form for possibility of extra options in the future. 
-    
-        if not front: #the following statements check the inputs are not null, and if they are, change the valid variable accordingly.
-            print("front")
-            valid = False
-        if not back:
-            print("back")
-            valid = False
-        
-        if conf not in validConf: #checks if users input is not in set of valid inputs. 
-            print("conf")
-            valid = False
+    valid = True #used to check input is valid
+    front = inpFront
+    back = inpBack
+    conf = inpConf
+    validConf = ['good', 'okay', 'bad'] #set of valid confidences, in list form for possibility of extra options in the future. 
 
-        if valid == False:
-            print("Error")
-            quit() #quits if inputs are invalid
-            
-        self.inputsList = [front, back, conf] #adds the three inputs into a list.
+    if not front: #the following statements check the inputs are not null, and if they are, change the valid variable accordingly.
+        print("front")
+        valid = False
+    if not back:
+        print("back")
+        valid = False
+    
+    if conf not in validConf: #checks if users input is not in set of valid inputs. 
+        print("conf")
+        valid = False
+
+    if valid == False:
+        print("Error")
+        quit() #quits if inputs are invalid
+        
+    self.inputsList = [front, back, conf] #adds the three inputs into a list.
 ```
 
 Since this works in tandem with other functions to add flashcard information to the database, it can be tested by running the program and checking the persitent database to check it has worked correctly. Such tests are carried out later in the report, at the point where iteration 2 was needed.
@@ -828,7 +828,29 @@ class General: #class for general function that may be used my any of the procee
 ```
 The ease of creating lists in Python compared to, say, arrays in C++ makes these two subroutines somewhat redundant in that they could be written locally in which ever subroutine is using them. I have decided to write them in this way sinceit allows for personalisation of the built in Python functions should I ever want to do it, as well as making it easier for potential 'other-language' developers to port it over (it is clearer to them that a subroutine must be written for these functions).
 
-ADD TESTING LATER.
+To test the queue can be created and added to, I make TestingEnvironment.py read as follows:
+
+```python
+#from TestingEnvironment.py
+
+import FlashcardFunctions as Ff
+
+queue = Ff.General.NewQueue()
+
+print(queue)
+
+Ff.General.EnQueue(queue, "test1")
+Ff.General.EnQueue(queue, "test2")
+Ff.General.EnQueue(queue, "test3")
+
+print(queue)
+```
+
+Running this, you get the outputs:
+
+![QueueTest1](pictures/QueueTest1.png)
+
+Which shows that it is working and satisfies the test plan so that I can progress to the next function.
 
 
 #### FormatInputSQL
@@ -885,8 +907,6 @@ Adder.FormatInputSQL()
 This aims to add to the database in a fashion that resembles the linear, non-queue flow type. When ran, however, it gives the following output:
 
 ![FormatInputFail1](pictures/FormatInputFail1.png)
-
-NOTE NEED TO REMAKE THIS FAIL. WARNING WARNING WARNING!!!!!!!!!!!
 
 After some research, I remember this is failing due to how python evaluates default arguments (at definition not during run time). To combat this I change the value of the default arguments to None and then use a selection statement to achieve the desired effect:
 
