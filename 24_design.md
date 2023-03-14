@@ -152,7 +152,19 @@ They will retrieve the mind map output file and exit the program.
 
 This test will simulate a buisness-person using the mind map feature to plan out ideas for a company conference.
 
-They will use 
+They will use the mind map creation window to attempt to make two unique mind maps.
+
+##### What Does This Test Look For?
+
+- How the software can be utilised outside of revision purposes
+- How the software handles creation of multiple mind maps
+- How useful the mind maps are
+
+### Stakeholder Testing
+
+During this final phase of testing, I will not give my stakeholders any prompts on how to use LambdaNotes. I will simply give them an allotted time to explore the software, and observe any bugs they find. 
+
+Afterwards, I will ask for some feedback that could inform the future development of the software.
 
 
 
