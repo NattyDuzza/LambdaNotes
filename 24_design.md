@@ -111,6 +111,8 @@ I will test the following:
 
 #### Removing Flashcards
 
+The valid testing has been completed to a satisfactory level through iterative testing during development of the functionality.
+
 I will test the following:
 
 - Erroneous Testing: I will see how the program reacts when I click to remove a flashcard when:
@@ -152,7 +154,7 @@ They will retrieve the mind map output file and exit the program.
 
 This test will simulate a buisness-person using the mind map feature to plan out ideas for a company conference.
 
-They will use 
+They will use the mind map function 
 
 
 
