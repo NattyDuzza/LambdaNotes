@@ -111,6 +111,8 @@ I will test the following:
 
 #### Removing Flashcards
 
+The valid testing has been completed to a satisfactory level through iterative testing during development of the functionality.
+
 I will test the following:
 
 - Erroneous Testing: I will see how the program reacts when I click to remove a flashcard when:
@@ -165,6 +167,7 @@ They will use the mind map creation window to attempt to make two unique mind ma
 During this final phase of testing, I will not give my stakeholders any prompts on how to use LambdaNotes. I will simply give them an allotted time to explore the software, and observe any bugs they find. 
 
 Afterwards, I will ask for some feedback that could inform the future development of the software.
+They will use the mind map function 
 
 
 
