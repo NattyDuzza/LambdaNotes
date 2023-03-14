@@ -139,4 +139,8 @@ I briefed all my stakeholders on the current state of the project, and decided t
 
 **Alex**:
 
-- Q1: "
+- Q1: "I'm excited, I've enjoyed seeing it come together and I'm looking forward to finally being able to try using it. I know it is only a preliminary build but it will be interesting to see its potential."
+
+- Q2: "I've stuck to my method of revision, I haven't felt the need to change anything since it has been working well. However, I am not opposed to the idea of incorporating this new software into my routine."
+
+- Q3: "
