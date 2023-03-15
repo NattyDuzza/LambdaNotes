@@ -128,7 +128,7 @@ I will test the following:
 - Valid Testing: 
   - I will attempt to create a mind map with only one node.
 
-  - I will attempt to create a mindmap with approx. 20 elements.
+  - I will attempt to create a mindmap with approx. 15 elements.
 
 - Erronenous Testing:
   - I will see how the program reacts when I click to create a mindmap when no nodes have been added.
@@ -167,7 +167,7 @@ They will use the mind map creation window to attempt to make two unique mind ma
 During this final phase of testing, I will not give my stakeholders any prompts on how to use LambdaNotes. I will simply give them an allotted time to explore the software, and observe any bugs they find. 
 
 Afterwards, I will ask for some feedback that could inform the future development of the software.
-They will use the mind map function 
+
 
 
 

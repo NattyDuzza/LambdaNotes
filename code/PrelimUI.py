@@ -283,7 +283,14 @@ class AddFlashcard(tk.Tk):
     def confirmAdd(self):
         front = self.front.get()
         back = self.back.get()
-        conf = self.confidence
+        if len(front) == 0:
+            return
+        if len(back) == 0:
+            return
+        try:
+            conf = self.confidence
+        except:
+            return
         UI.AddFlashcard(track.setID, front, back, conf)
         self.FlashcardFrontEntry.delete(0, tk.END)
         self.FlashcardBackEntry.delete(0, tk.END)
@@ -299,7 +306,6 @@ class RetrievalWin(tk.Tk):
 
         #window configuration
         self.title("LambdaNotes - Revise Flashcards")
-        self.geometry("300x350")
 
         #-------------------------------------------------
 

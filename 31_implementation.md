@@ -649,9 +649,11 @@ Video evidence of it working: RemoveFlashcardMultiCardset.mp4
 
 Creation of UI layout:
 
-add picture of UI layout.
+[AddFlashcard](pictures/AddFlashcard.png)
 
 ```python
+#from PrelimUI.py
+
 class AddFlashcard(tk.Tk):
     
     def __init__(self):
@@ -725,6 +727,8 @@ class AddFlashcard(tk.Tk):
 To grab information in entry fields and pass it to UIbackend.py:
 
 ```python
+#from PrelimUI.py
+
 def confirmAdd(self):
         front = self.front.get()
         back = self.back.get()
@@ -735,6 +739,8 @@ def confirmAdd(self):
 ```
 
 ```python
+#from UIbackend.py
+
 def AddFlashcard(setID, front, back, confidence):
     instance = MakeAdderObject(setID)
     instance.ConfigCheck()
@@ -745,6 +751,8 @@ def AddFlashcard(setID, front, back, confidence):
 Now to change FlashcardsFunctions.py to take in different kind of input:
 
 ```python
+#from FlashcardFunctions.py
+
 def GetInput(self, inpFront, inpBack, inpConf): #will need to be updated when packaged into a GUI.
         valid = True #used to check input is valid
         front = inpFront
@@ -753,13 +761,9 @@ def GetInput(self, inpFront, inpBack, inpConf): #will need to be updated when pa
         validConf = ['good', 'okay', 'bad'] #set of valid confidences, in list form for possibility of extra options in the future.
 ```
 
-Working:
-
-
-
 Other changes made:
 - extra variable to track previous window (will be used for back buttons etc)
-- 
+
 
 Adding Menu:
 

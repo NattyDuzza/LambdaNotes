@@ -76,6 +76,11 @@ def MakeAdderObject(setID):
     return adder
 
 def AddFlashcard(setID, front, back, confidence):
+    if front == None:
+        print("Fixed bro")
+        return
+    if back is None:
+        return
     instance = MakeAdderObject(setID)
     instance.ConfigCheck()
     instance.GetInput(front, back, confidence)
